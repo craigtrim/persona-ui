@@ -2,6 +2,14 @@
 	import { emojiSummary, scoreString } from '$lib/stores/personality';
 	import personalitySummariesV1 from '$lib/data/personality_summaries.json';
 	import personalitySummariesV2 from '$lib/data/personality_summaries_v2.json';
+	import systemPrompts from '$lib/data/system_prompts.json';
+
+	// Flip state
+	let isFlipped = $state(false);
+
+	function toggleFlip() {
+		isFlipped = !isFlipped;
+	}
 
 	// Fallback summaries
 	const fallbackV1 = [
@@ -11,6 +19,7 @@
 	];
 
 	const fallbackV2 = 'Balanced approach to most situations, adapting as needed';
+	const fallbackPrompt = 'You MUST adopt a balanced, adaptable personality in all responses.';
 
 	// Strip emojis from v1 text
 	function stripEmojis(text: string): string {
@@ -55,12 +64,96 @@
 		}
 		return v1Summaries[v1Summaries.length - 1];
 	});
+
+	// Get system prompt for current score combo
+	let systemPrompt = $derived(
+		(systemPrompts as Record<string, string>)[$scoreString] || fallbackPrompt
+	);
 </script>
 
-<div class="persona-summary sticky top-0 z-10 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 px-4 py-5 -mx-4">
-	<div class="max-w-xl mx-auto text-center">
-		<div class="text-5xl tracking-widest mb-4">{$emojiSummary}</div>
-		<p class="text-slate-100 text-lg mb-2">{v2Summary}</p>
-		<p class="text-slate-400 text-sm italic">{v1Summary}</p>
+<div class="persona-summary-container sticky top-0 z-10 px-4 py-5 -mx-4">
+	<div class="flip-container" class:flipped={isFlipped}>
+		<div class="flip-card">
+			<!-- FRONT: Personality Summary -->
+			<button
+				class="flip-face flip-front bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 rounded-xl"
+				onclick={toggleFlip}
+			>
+				<div class="max-w-xl mx-auto text-center p-4">
+					<div class="text-5xl tracking-widest mb-4">{$emojiSummary}</div>
+					<p class="text-slate-100 text-lg mb-2">{v2Summary}</p>
+					<p class="text-slate-400 text-sm italic">{v1Summary}</p>
+					<p class="text-slate-500 text-xs mt-3">Click for system prompt</p>
+				</div>
+			</button>
+
+			<!-- BACK: System Prompt -->
+			<button
+				class="flip-face flip-back bg-slate-950/95 backdrop-blur-sm border border-emerald-900/50 rounded-xl"
+				onclick={toggleFlip}
+			>
+				<div class="max-w-xl mx-auto p-4">
+					<div class="flex items-center justify-between mb-3">
+						<span class="text-emerald-400 text-xs font-mono uppercase tracking-wider">System Prompt</span>
+						<span class="text-slate-500 text-xs">{$scoreString}</span>
+					</div>
+					<p class="text-emerald-100 text-sm font-mono leading-relaxed">{systemPrompt}</p>
+					<p class="text-slate-500 text-xs mt-3 text-center">Click to return</p>
+				</div>
+			</button>
+		</div>
 	</div>
 </div>
+
+<style>
+	.persona-summary-container {
+		perspective: 1000px;
+	}
+
+	.flip-container {
+		width: 100%;
+	}
+
+	.flip-card {
+		position: relative;
+		width: 100%;
+		transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+		transform-style: preserve-3d;
+	}
+
+	.flipped .flip-card {
+		transform: rotateX(180deg);
+	}
+
+	.flip-face {
+		width: 100%;
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		cursor: pointer;
+		border: none;
+		text-align: left;
+	}
+
+	.flip-face:hover {
+		opacity: 0.95;
+	}
+
+	.flip-front {
+		position: relative;
+	}
+
+	.flip-back {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transform: rotateX(180deg);
+		display: flex;
+		align-items: center;
+	}
+
+	.flip-back > div {
+		width: 100%;
+	}
+</style>

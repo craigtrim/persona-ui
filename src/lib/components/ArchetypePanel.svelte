@@ -46,6 +46,9 @@
 	let scrollContainer: HTMLDivElement;
 	let selectedArchetypeId = $state<string | null>(null);
 
+	// Derived state for Cipher selection
+	let isCipherSelected = $derived(selectedArchetypeId === CIPHER.id);
+
 	// Handle archetype selection - set sliders to archetype's trait values
 	function selectArchetype(archetype: ArchetypeDefinition) {
 		selectedArchetypeId = archetype.id;
@@ -212,7 +215,6 @@
 		{/each}
 
 		<!-- Cipher at the end (or highlighted if best match exceeds threshold) -->
-		{@const isCipherSelected = selectedArchetypeId === CIPHER.id}
 		<button
 			class="archetype-item cipher-item"
 			class:best-match={bestMatch.isCipher}
