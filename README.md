@@ -9,7 +9,7 @@
 An interactive personality exploration tool built on the **Big Five Inventory-2 (BFI-2)** psychometric framework. Designed for generating and visualizing personality profiles for AI agents, chatbots, and adversarial testing scenarios.
 
 <p align="center">
-  <em>Part of the Persona suite. See also: <a href="../persona-api">persona-api</a></em>
+  <em>Part of the Persona suite. See also: <a href="https://github.com/craigtrim/persona-api">persona-api</a></em>
 </p>
 
 ## Purpose
@@ -97,7 +97,7 @@ npm run preview
 
 ## Data Sources
 
-The personality summaries and system prompts were generated using the [persona-api](../persona-api) service, which leverages:
+The personality summaries and system prompts were generated using the [persona-api](https://github.com/craigtrim/persona-api) service, which leverages:
 
 - The official BFI-2 60-item questionnaire
 - An OWL ontology (`big5.owl`) encoding domain/facet relationships
@@ -127,7 +127,7 @@ src/
 
 ## Related Projects
 
-- **[persona-api](../persona-api)**: FastAPI backend for generating personality profiles and system prompts
+- **[persona-api](https://github.com/craigtrim/persona-api)**: FastAPI backend for generating personality profiles and system prompts
 
 ## References
 
