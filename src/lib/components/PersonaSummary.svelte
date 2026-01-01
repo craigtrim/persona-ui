@@ -4,7 +4,7 @@
 	import personalitySummariesV2 from '$lib/data/personality_summaries_v2.json';
 	import systemPrompts from '$lib/data/system_prompts.json';
 
-	// Flip state
+	// Flip state for prompt panel
 	let isFlipped = $state(false);
 
 	function toggleFlip() {
@@ -71,16 +71,21 @@
 	);
 </script>
 
-<div class="persona-summary-container sticky top-0 z-10 px-4 py-5 -mx-4">
+<!-- Emoji Header - Sticky at top -->
+<div class="emoji-header sticky top-0 z-20 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 px-4 py-3 -mx-4">
+	<div class="text-5xl tracking-widest text-center">{$emojiSummary}</div>
+</div>
+
+<!-- Prompt Panel - Scrolls with content -->
+<div class="prompt-panel my-4">
 	<div class="flip-container" class:flipped={isFlipped}>
 		<div class="flip-card">
 			<!-- FRONT: Personality Summary -->
 			<button
-				class="flip-face flip-front bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 rounded-xl"
+				class="flip-face flip-front bg-slate-800/50 rounded-xl"
 				onclick={toggleFlip}
 			>
 				<div class="max-w-xl mx-auto text-center p-4">
-					<div class="text-5xl tracking-widest mb-4">{$emojiSummary}</div>
 					<p class="text-slate-100 text-lg mb-2">{v2Summary}</p>
 					<p class="text-slate-400 text-sm italic">{v1Summary}</p>
 					<p class="text-slate-500 text-xs mt-3">Click for system prompt</p>
@@ -89,7 +94,7 @@
 
 			<!-- BACK: System Prompt -->
 			<button
-				class="flip-face flip-back bg-slate-950/95 backdrop-blur-sm border border-emerald-900/50 rounded-xl"
+				class="flip-face flip-back bg-slate-950/95 border border-emerald-900/50 rounded-xl"
 				onclick={toggleFlip}
 			>
 				<div class="max-w-xl mx-auto p-4">
@@ -106,7 +111,7 @@
 </div>
 
 <style>
-	.persona-summary-container {
+	.prompt-panel {
 		perspective: 1000px;
 	}
 
