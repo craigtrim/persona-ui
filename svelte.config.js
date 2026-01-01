@@ -12,12 +12,8 @@ const config = {
 			fallback: undefined,
 			precompress: false,
 			strict: true
-		}),
-		// GitHub Pages serves from /<repo-name>/ path
-		// Update 'persona-ui' to match your actual repo name
-		paths: {
-			base: process.env.NODE_ENV === 'production' ? '/persona-ui' : ''
-		}
+		})
+		// Custom domain (botprofile.work) serves from root, no base path needed
 	}
 };
 
