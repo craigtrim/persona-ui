@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { emojiSummary, scoreString } from '$lib/stores/personality';
+	// scoreString: for JSON lookups (order: A,C,E,O,N - matches data files)
+	// scoreStringDisplay: for UI display (order: A,C,E,N,O - matches slider panel layout)
+	import { emojiSummary, scoreString, scoreStringDisplay } from '$lib/stores/personality';
 	import personalitySummariesV1 from '$lib/data/personality_summaries.json';
 	import personalitySummariesV2 from '$lib/data/personality_summaries_v2.json';
 	import systemPrompts from '$lib/data/system_prompts.json';
@@ -19,7 +21,7 @@
 	];
 
 	const fallbackV2 = 'Balanced approach to most situations, adapting as needed';
-	const fallbackPrompt = 'You MUST adopt a balanced, adaptable personality in all responses.';
+	const fallbackPrompt = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.';
 
 	// Strip emojis from v1 text
 	function stripEmojis(text: string): string {
@@ -88,7 +90,6 @@
 				<div class="max-w-xl mx-auto text-center p-4">
 					<p class="text-slate-100 text-lg mb-2">{v2Summary}</p>
 					<p class="text-slate-400 text-sm italic">{v1Summary}</p>
-					<p class="text-slate-500 text-xs mt-3">Click for system prompt</p>
 				</div>
 			</button>
 
@@ -100,10 +101,10 @@
 				<div class="max-w-xl mx-auto p-4">
 					<div class="flex items-center justify-between mb-3">
 						<span class="text-emerald-400 text-xs font-mono uppercase tracking-wider">System Prompt</span>
-						<span class="text-slate-500 text-xs">{$scoreString}</span>
+						<!-- Display order matches slider panels: A,C,E,N,O -->
+						<span class="text-slate-500 text-xs">{$scoreStringDisplay}</span>
 					</div>
 					<p class="text-emerald-100 text-sm font-mono leading-relaxed">{systemPrompt}</p>
-					<p class="text-slate-500 text-xs mt-3 text-center">Click to return</p>
 				</div>
 			</button>
 		</div>
@@ -145,6 +146,10 @@
 
 	.flip-front {
 		position: relative;
+		/* Fixed minimum height ensures consistent panel size and room for longer text */
+		min-height: 140px;
+		display: flex;
+		align-items: center;
 	}
 
 	.flip-back {
@@ -154,8 +159,7 @@
 		width: 100%;
 		height: 100%;
 		transform: rotateX(180deg);
-		display: flex;
-		align-items: center;
+		overflow-y: auto;
 	}
 
 	.flip-back > div {

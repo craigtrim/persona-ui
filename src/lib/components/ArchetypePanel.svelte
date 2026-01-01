@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { domainScores, facetScores, setDomainScore } from '$lib/stores/personality';
+	import { domainScores, facetScores, setDomainScore, initialArchetypeId } from '$lib/stores/personality';
 	import {
 		ARCHETYPES,
 		CIPHER,
@@ -44,7 +44,8 @@
 
 	// Reference to the scroll container
 	let scrollContainer: HTMLDivElement;
-	let selectedArchetypeId = $state<string | null>(null);
+	// Initialize with the randomly selected archetype from the store
+	let selectedArchetypeId = $state<string | null>(initialArchetypeId);
 
 	// Derived state for Cipher selection
 	let isCipherSelected = $derived(selectedArchetypeId === CIPHER.id);

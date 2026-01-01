@@ -89,22 +89,28 @@ function randomFacets(): [number, number, number] {
 	];
 }
 
-// Convert archetype trait value (1.5, 3, 4.5) to facet scores
-// Uses uniform facet values to ensure domain score matches an integer
-// This is important because personality summaries are keyed by integer scores
+// Convert archetype trait value (1.5, 3, 4.5) to facet scores that produce exact match
+// H=4.5 -> [4,5,5] avg=4.67 rounds to 4.5, L=1.5 -> [1,1,2] avg=1.33 rounds to 1.5, M=3 -> [3,3,3]
 function archetypeTraitToFacets(traitValue: number): [number, number, number] {
-	// Map 1.5 -> 2, 3 -> 3, 4.5 -> 4 (rounded to nearest integer)
-	const base = Math.round(traitValue);
-	// Clamp to valid range
-	const value = Math.max(1, Math.min(5, base));
-	// All facets same value = integer average
-	return [value, value, value];
+	if (traitValue === 4.5) {
+		return [4, 5, 5]; // avg = 4.67, rounds to 4.5
+	} else if (traitValue === 1.5) {
+		return [1, 1, 2]; // avg = 1.33, rounds to 1.5
+	} else {
+		// Medium (3) or other integer values
+		const value = Math.max(1, Math.min(5, Math.round(traitValue)));
+		return [value, value, value];
+	}
 }
 
-// Initialize with a random archetype
-function initializeFromRandomArchetype(): Record<string, [number, number, number]> {
-	const randomArchetype = ARCHETYPES[Math.floor(Math.random() * ARCHETYPES.length)];
+// Select a random archetype at module load time
+const randomArchetype = ARCHETYPES[Math.floor(Math.random() * ARCHETYPES.length)];
 
+// Export the initial archetype ID so ArchetypePanel can highlight it
+export const initialArchetypeId = randomArchetype.id;
+
+// Initialize with a random archetype - exact trait values for 100% match
+function initializeFromRandomArchetype(): Record<string, [number, number, number]> {
 	return {
 		// For non-inverted domains, use trait value directly
 		agreeableness: archetypeTraitToFacets(randomArchetype.traits.agreeableness),
@@ -204,9 +210,12 @@ export const emojiSummary = derived(domainScores, ($scores) => {
 	}).join('');
 });
 
-// Derived store for score string (A3,C3,E3,O3,N3)
-// Uses rounded integers to match personality summary JSON keys
+// Derived store for score string used for JSON lookups (A3,C3,E3,O3,N3)
+// ORDER: A, C, E, O, N - matches the keys in system_prompts.json and personality_summaries.json
+// This is different from the UI panel order (A, C, E, N, O) - see scoreStringDisplay below
 export const scoreString = derived(domainScores, ($scores) => {
+	// JSON key order: A, C, E, O, N (historical format from training data)
+	const jsonKeyOrder = ['agreeableness', 'conscientiousness', 'extraversion', 'open_mindedness', 'negative_emotionality'];
 	const prefixes: Record<string, string> = {
 		agreeableness: 'A',
 		conscientiousness: 'C',
@@ -214,7 +223,23 @@ export const scoreString = derived(domainScores, ($scores) => {
 		open_mindedness: 'O',
 		negative_emotionality: 'N'
 	};
-	return DOMAINS.map((d) => `${prefixes[d.id]}${Math.round($scores[d.id])}`).join(',');
+	return jsonKeyOrder.map((id) => `${prefixes[id]}${Math.round($scores[id])}`).join(',');
+});
+
+// Derived store for display-only score string that matches the UI panel order
+// ORDER: A, C, E, N, O - matches the DOMAINS array and slider panel layout
+// Use this for UI display; use scoreString for JSON lookups
+export const scoreStringDisplay = derived(domainScores, ($scores) => {
+	// UI panel order: A, C, E, N, O (matches DOMAINS array)
+	const uiPanelOrder = ['agreeableness', 'conscientiousness', 'extraversion', 'negative_emotionality', 'open_mindedness'];
+	const prefixes: Record<string, string> = {
+		agreeableness: 'A',
+		conscientiousness: 'C',
+		extraversion: 'E',
+		negative_emotionality: 'N',
+		open_mindedness: 'O'
+	};
+	return uiPanelOrder.map((id) => `${prefixes[id]}${Math.round($scores[id])}`).join(',');
 });
 
 // Helper to get API-ready scores (inverts scores for inverted domains)
