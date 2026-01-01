@@ -27,6 +27,19 @@
 	// Format score for display (show .5 if present)
 	let displayScore = $derived(Number.isInteger(score) ? score.toString() : score.toFixed(1));
 
+	// Text label for the back side
+	let scoreLabel = $derived.by(() => {
+		const rounded = Math.round(score);
+		const labels: Record<number, string> = {
+			1: 'Low',
+			2: 'Medium Low',
+			3: 'Balanced',
+			4: 'Medium High',
+			5: 'High'
+		};
+		return labels[rounded] || 'Balanced';
+	});
+
 	function handleInput(e: Event) {
 		const target = e.target as HTMLInputElement;
 		onDomainChange(parseFloat(target.value));
@@ -123,7 +136,7 @@
 					<span class="text-2xl">{currentEmoji}</span>
 					<span class="text-sm font-medium text-slate-200">{config.name}</span>
 				</div>
-				<span class="text-xs text-slate-400 hover:text-slate-200">✕ Close</span>
+				<span class="text-xs text-slate-400">{scoreLabel}</span>
 			</button>
 
 			{#if textEntry}

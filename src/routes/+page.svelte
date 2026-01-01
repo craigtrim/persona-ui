@@ -1,8 +1,11 @@
 <script lang="ts">
 	import DomainSlider from '$lib/components/DomainSlider.svelte';
 	import PersonaSummary from '$lib/components/PersonaSummary.svelte';
+	import ArchetypePanel from '$lib/components/ArchetypePanel.svelte';
 	import { DOMAINS, domainScores, facetScores, setDomainScore, setFacetScore } from '$lib/stores/personality';
 </script>
+
+<ArchetypePanel />
 
 <div class="min-h-screen py-6 px-4">
 	<div class="max-w-xl mx-auto">

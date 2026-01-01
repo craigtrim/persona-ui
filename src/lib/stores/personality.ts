@@ -1,5 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import facetKeywords from '$lib/data/facet_keywords.json';
+import { ARCHETYPES } from '$lib/data/archetypes';
 
 export interface DomainConfig {
 	id: string;
@@ -88,15 +89,39 @@ function randomFacets(): [number, number, number] {
 	];
 }
 
+// Convert archetype trait value (1.5, 3, 4.5) to facet scores
+// Uses uniform facet values to ensure domain score matches an integer
+// This is important because personality summaries are keyed by integer scores
+function archetypeTraitToFacets(traitValue: number): [number, number, number] {
+	// Map 1.5 -> 2, 3 -> 3, 4.5 -> 4 (rounded to nearest integer)
+	const base = Math.round(traitValue);
+	// Clamp to valid range
+	const value = Math.max(1, Math.min(5, base));
+	// All facets same value = integer average
+	return [value, value, value];
+}
+
+// Initialize with a random archetype
+function initializeFromRandomArchetype(): Record<string, [number, number, number]> {
+	const randomArchetype = ARCHETYPES[Math.floor(Math.random() * ARCHETYPES.length)];
+
+	return {
+		// For non-inverted domains, use trait value directly
+		agreeableness: archetypeTraitToFacets(randomArchetype.traits.agreeableness),
+		conscientiousness: archetypeTraitToFacets(randomArchetype.traits.conscientiousness),
+		extraversion: archetypeTraitToFacets(randomArchetype.traits.extraversion),
+		// For negative_emotionality: archetype stores API value (low N = calm)
+		// UI expects inverted (high = calm), so convert: UI = 6 - API
+		negative_emotionality: archetypeTraitToFacets(6 - randomArchetype.traits.negative_emotionality),
+		open_mindedness: archetypeTraitToFacets(randomArchetype.traits.open_mindedness)
+	};
+}
+
 // Store for facet scores (1-5) - three facets per domain
-// Initialize with random values
-export const facetScores = writable<Record<string, [number, number, number]>>({
-	agreeableness: randomFacets(),
-	conscientiousness: randomFacets(),
-	extraversion: randomFacets(),
-	negative_emotionality: randomFacets(),
-	open_mindedness: randomFacets()
-});
+// Initialize with a random archetype for better starting experience
+export const facetScores = writable<Record<string, [number, number, number]>>(
+	initializeFromRandomArchetype()
+);
 
 // Function to randomize all personality scores
 export function randomizePersonality() {
@@ -179,13 +204,8 @@ export const emojiSummary = derived(domainScores, ($scores) => {
 	}).join('');
 });
 
-// Format score for display (show .5 if present)
-function formatScore(score: number): string {
-	return Number.isInteger(score) ? score.toString() : score.toFixed(1);
-}
-
-// Derived store for score string (A3,C3,E3,O3,N3 or A2.5,C3,...)
-// Note: This shows the UI display scores, NOT the API scores
+// Derived store for score string (A3,C3,E3,O3,N3)
+// Uses rounded integers to match personality summary JSON keys
 export const scoreString = derived(domainScores, ($scores) => {
 	const prefixes: Record<string, string> = {
 		agreeableness: 'A',
@@ -194,7 +214,7 @@ export const scoreString = derived(domainScores, ($scores) => {
 		open_mindedness: 'O',
 		negative_emotionality: 'N'
 	};
-	return DOMAINS.map((d) => `${prefixes[d.id]}${formatScore($scores[d.id])}`).join(',');
+	return DOMAINS.map((d) => `${prefixes[d.id]}${Math.round($scores[d.id])}`).join(',');
 });
 
 // Helper to get API-ready scores (inverts scores for inverted domains)
