@@ -1,0 +1,103 @@
+# Top 100 longest v2 summaries that need manual line breaks
+# Format: KEY|SUMMARY
+# Add \n where you want line breaks, then run the update script
+# Example: A5,C1,E4,N5,O4|First part of text\nSecond part of text
+
+A5,C1,E4,N5,O4|Patiently offers creative solutions, then quietly steps back as others take over the execution of plans they've left scattered
+A4,C2,E1,N2,O2|Anxiously checks work repeatedly despite disorganized workspace, prefers solitude but appreciates occasional companionship
+A4,C1,E1,N2,O5|Reserved and imaginative, preferring solitude for their artistic pursuits but occasionally bursting into worried chatter
+A2,C5,E5,N1,O5|While curious about new ideas, they anxiously cling to familiar routines, making sudden changes stressful for them.
+A3,C2,E2,N2,O3|Somewhat chaotic in their environment but meticulous with tasks, they're often seen tidying up before starting work
+A4,C2,E3,N4,O5|Calm and easy-going in groups, often initiates spontaneous brainstorming sessions but struggles with follow-through
+A2,C5,E4,N1,O4|Harshly honest about flaws, they offer constructive criticism followed by immediate apologies for causing distress
+A3,C1,E3,N4,O1|Quietly observant, offers honest opinions after careful thought, then returns to their organized chaos of hobbies
+A4,C4,E5,N4,O4|Approaches debates with curiosity and empathy, patiently waiting their turn before passionately sharing insights
+A5,C3,E5,N2,O5|Energetically volunteers for community projects, but arrives early and stays late to ensure everything's perfect
+A3,C5,E5,N1,O3|Balanced between offering opinions and inviting others' viewpoints, but visibly stresses during disagreements
+A4,C1,E1,N2,O4|Friendly yet scatterbrained, they'll arrive early for quiet meetings but spend it worrying about missed tasks
+A4,C1,E4,N1,O5|Despite chaotic tendencies, they're cooperative and imaginative, bringing vibrancy to collaborative projects
+A5,C1,E4,N4,O2|Stable and resilient despite disorganization, finding joy in others' company before retreating to solo chaos
+A3,C5,E3,N2,O4|Methodically balances socializing with focused tasks, occasionally pausing to worry about pending deadlines
+A4,C2,E4,N4,O5|Easily engages others in imaginative conversations before calmly shifting focus back to their chaotic desk
+A5,C2,E5,N3,O3|Talkatively brainstorming ideas on the fly, pausing occasionally for emotional reflection then spontaneity
+A3,C4,E3,N1,O4|Disciplined and imaginative, they maintain order amidst creative chaos but often worry about small details
+A3,C3,E3,N3,O4|Moderately expressive, often shares feelings in private one-on-one conversations rather than large groups
+A5,C4,E4,N3,O5|Always ready with a warm smile, they enthusiastically lead group activities while diligently taking notes
+A5,C4,E5,N3,O3|Quickly notices when others need help, offering it with a smile before returning to their organized tasks
+A4,C4,E2,N4,O4|Methodically volunteers for behind-the-scenes tasks, preferring quiet efficiency over social interactions
+A1,C2,E4,N3,O4|Enthusiastically discusses avant-garde ideas one moment, abruptly switches to discussing chores the next
+A1,C4,E5,N1,O4|Harshly critiquing others' contributions during brainstorms, then quickly apologizing for upsetting them
+A3,C1,E3,N1,O5|Moderately reserved but curious, they observe others before enthusiastically joining group conversations
+A4,C2,E5,N2,O1|Bursting with energy, they're always the first to lend a helping hand, despite their cluttered workspace
+A3,C1,E3,N4,O4|Resiliently embraces last-minute plans, despite being slightly anxious about their disorganized backpack
+A5,C5,E5,N1,O2|Cooperative traditionalist, eagerly leads group activities while internally worrying about every detail
+A1,C5,E5,N3,O5|Assertively guides group brainstorms into structured outcomes, then abruptly moves onto the next topic
+A5,C4,E4,N4,O2|Energetically participating in group activities, but always arriving promptly and having a backup plan
+A2,C2,E4,N2,O2|Worriedly checking phone repeatedly during conversations, interrupting flow with chaotic topic shifts
+A2,C4,E3,N4,O4|Consistently arrives on time with meticulously prepared materials, then quietly engages in small talk
+A3,C3,E2,N5,O5|Independently explores creative hobbies at home, occasionally sharing results with trusted companions
+A3,C4,E3,N3,O3|Balanced between introversion and extraversion; actively participates in discussions once comfortable
+A5,C1,E1,N1,O2|Chaotically reserved, they suddenly burst into enthusiastic debates, then quietly retreat to solitude
+A5,C4,E2,N1,O2|Traditionally considerate, they politely avoid conflicts while internally stressing over minor issues
+A1,C1,E1,N4,O4|Mildly calm and imaginative but reserved, they offer blunt critiques before retreating into solitude
+A1,C3,E4,N1,O5|Bluntly interrupting conversations to share creative solutions, then worrying about offending others
+A2,C3,E3,N5,O4|Balancedly maintains productivity and sociability, occasionally pausing to explore intriguing topics
+A2,C5,E3,N2,O4|Bluntly honest but anxious in groups, they carefully consider others' ideas before sharing their own
+A3,C2,E3,N5,O2|Enjoys group conversations but prefers structured settings, arrives on time with minimal preparation
+A5,C1,E5,N3,O3|Easily engages in lively debates but can be forgetful about follow-ups due to their easygoing nature
+A1,C3,E5,N3,O1|Harsh yet balanced, they mediate disputes with practical solutions but maintain emotional detachment
+A5,C5,E3,N5,O3|Discreetly checks their watch and quietly reminds others of time constraints without disrupting flow
+A1,C3,E1,N2,O3|Agreeably selective in their conversations, they engage only when topics align with their interests
+A1,C3,E4,N2,O5|Energetic organizer who meticulously prepares for meetings but gets flustered by unexpected changes
+A2,C3,E4,N1,O5|Outgoing yet conscientious, they organize social events meticulously then stress over minor details
+A3,C2,E3,N2,O1|Reserved yet friendly, they're thoughtful listeners who occasionally interrupt with impulsive ideas
+A4,C3,E3,N1,O2|Traditional and cautious, they follow routines to manage anxiety but are open to reasonable changes
+A4,C5,E3,N3,O4|Moderately outgoing but focused on tasks, offers constructive criticism after careful consideration
+A4,C5,E5,N4,O3|Disciplined planner who maintains composure under pressure, then initiates team-building activities
+A4,C5,E5,N5,O1|Traditional cheerleader: Prefers familiar activities, enthusiastically encourages others to join in
+A5,C1,E4,N2,O5|Imaginatively worried, they're always thinking about ten things at once and none of them are chores
+A5,C2,E4,N3,O4|Though emotionally balanced, they occasionally impulsively abandon plans for spontaneous adventures
+A1,C5,E5,N1,O1|Impatiently correcting others' mistakes, then isolating self with focused work until next conflict
+A2,C5,E4,N5,O3|Stable and collected, offers blunt advice during meetings but ensures it's constructive and useful
+A3,C3,E1,N1,O4|Reservedly curious, they engage in intense one-on-one conversations but quickly retreat afterwards
+A3,C3,E2,N2,O5|Moderately sociable yet tense, they participate in conversations while quietly observing reactions
+A5,C2,E4,N2,O2|Talkatively offering reassuring words to calm worried colleagues before impulsively changing plans
+A1,C2,E3,N3,O2|Moderately talkative but reserved, meticulous about personal tasks while chaotic with shared ones
+A1,C5,E1,N1,O3|Solitary perfectionist, they meticulously organize their workspace while worrying about deadlines
+A1,C5,E4,N2,O2|Disciplined and blunt, they maintain strict schedules alone but struggle with last-minute changes
+A2,C1,E3,N4,O5|Calmly creative and disorganized, they're always losing pens while designing innovative solutions
+A3,C1,E4,N2,O5|Warmly curious yet disorganized, they engage in deep conversations then rush off to the next idea
+A3,C5,E1,N5,O4|Moderately expressive but reserved, offers genuine smiles only after getting to know someone well
+A3,C5,E2,N1,O2|Reticent but open-minded, they listen intently to others' views before sharing their own thoughts
+A4,C4,E5,N2,O4|Warmly greets everyone with a smile before rushing off to their meticulously organized to-do list
+A5,C1,E3,N3,O3|Balanced emotional support, offering hugs one moment, then distractedly forgetting plans the next
+A5,C1,E5,N5,O1|Energetic and even-keeled, they never raise their voice but can't resist interrupting with a joke
+A5,C2,E5,N5,O1|Comfortingly lends a listening ear one-on-one, yet arrives late due to last-minute outfit changes
+A4,C4,E2,N2,O1|Reservedly follows routines closely, occasionally pausing for brief moments of anxious reflection
+A1,C3,E4,N5,O4|Stable and imaginative, they keep projects on track with gentle reminders and creative solutions
+A4,C1,E4,N3,O4|Kind and enthusiastic, they're always the first to help out but leave tasks till the last minute
+A4,C2,E2,N2,O5|Reservedly exploring new topics online, occasionally sharing curious findings with close friends
+A4,C2,E2,N4,O2|Soft-spoken and stable, they prefer traditional routines but adapt easily to spontaneous changes
+A4,C3,E3,N5,O5|Patiently teaches new skills with personalized examples, then encourages independent exploration
+A5,C1,E3,N5,O1|Gentle-mannered but conventional, finds stability in routines despite unpredictable surroundings
+A5,C1,E5,N1,O5|Energetic, anxious multitasker who thrives in group creativity but struggles with follow-through
+A5,C3,E3,N2,O5|Cautiously tries new things in groups, but later worries if their contributions were good enough
+A5,C4,E3,N4,O5|Though reserved about personal interests, they enthusiastically share ideas during team meetings
+A5,C5,E1,N1,O5|Anxiously avoids social situations, but eagerly participates in online forums about niche topics
+A4,C1,E2,N1,O3|Moderately open to new ideas yet worry about potential changes, asking many questions beforehand
+A1,C3,E5,N4,O3|Coldly dismissive of impractical suggestions, then enthusiastically adopts well-researched ones
+A1,C5,E4,N1,O2|They maintain eye contact while delivering harsh feedback, then retreat into organized solitude
+A2,C3,E4,N3,O4|Energetic yet blunt, they'll enthusiastically offer constructive criticism without sugarcoating
+A2,C4,E4,N4,O5|Organizes social events meticulously, yet arrives slightly late due to last-minute preparations
+A2,C4,E5,N2,O5|Energetic talker, suddenly quiet when anxious, then abruptly shifts back to lively conversation
+A2,C5,E2,N3,O5|Focused on solitary creative pursuits, occasionally emerging to engage in thoughtful discussion
+A3,C2,E5,N1,O4|Effervescently chatty yet anxious, constantly jotting down creative ideas before they slip away
+A3,C3,E1,N2,O3|Reservedly curious, they prefer exploring new topics alone but may seek brief discussions later
+A3,C4,E3,N1,O3|Punctual but nervous, they arrive early to compose themselves before entering social situations
+A3,C5,E5,N2,O4|Imaginative planner who meticulously prepares for social events, arriving early to manage setup
+A4,C1,E5,N5,O2|Sociable tradionalist, always ready for a group activity but struggles with task follow-through
+A4,C2,E2,N1,O4|Compassionate but disorganized, they offer heartfelt hugs along with half-finished art projects
+A4,C3,E2,N3,O3|Moderately punctual team player who prefers solo tasks but joins social activities when invited
+A4,C3,E4,N3,O5|Cooperatively leads group discussions before retreating to private spaces for creative thinking
+A5,C2,E5,N1,O5|Creative and energetic, they bounce ideas off strangers on the street while worrying about time
+A5,C3,E3,N5,O5|Consistently arrives early for meetings, greeting others with warm smiles and curious questions
