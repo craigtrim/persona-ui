@@ -1,6 +1,7 @@
 <script lang="ts">
-	// scoreString: for JSON lookups (order: A,C,E,O,N - matches data files)
-	// scoreStringDisplay: for UI display (order: A,C,E,N,O - matches slider panel layout)
+	// ⚠️ CRITICAL: scoreString order is A,C,E,N,O (N before O) - must match JSON file keys
+	// Both scoreString and scoreStringDisplay now use the same order: A,C,E,N,O
+	// If lookups fail, you'll see fallback text like "Balanced approach to most situations"
 	import { emojiSummary, scoreString, scoreStringDisplay } from '$lib/stores/personality';
 	import personalitySummariesV1 from '$lib/data/personality_summaries.json';
 	import personalitySummariesV2 from '$lib/data/personality_summaries_v2.json';

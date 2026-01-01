@@ -210,18 +210,27 @@ export const emojiSummary = derived(domainScores, ($scores) => {
 	}).join('');
 });
 
-// Derived store for score string used for JSON lookups (A3,C3,E3,O3,N3)
-// ORDER: A, C, E, O, N - matches the keys in system_prompts.json and personality_summaries.json
-// This is different from the UI panel order (A, C, E, N, O) - see scoreStringDisplay below
+// Derived store for score string used for JSON lookups (A3,C3,E3,N3,O3)
+//
+// ⚠️  CRITICAL: DO NOT CHANGE THIS ORDER ⚠️
+// Order MUST be: A, C, E, N, O (Agreeableness, Conscientiousness, Extraversion, Negative_emotionality, Open_mindedness)
+// This matches the keys in:
+//   - personality_summaries.json
+//   - personality_summaries_v2.json
+//   - system_prompts.json
+//
+// If you change this order, JSON lookups will fail and show fallback text like
+// "Balanced approach to most situations" instead of actual personality summaries.
+//
 export const scoreString = derived(domainScores, ($scores) => {
-	// JSON key order: A, C, E, O, N (historical format from training data)
-	const jsonKeyOrder = ['agreeableness', 'conscientiousness', 'extraversion', 'open_mindedness', 'negative_emotionality'];
+	// ⚠️ JSON key order: A, C, E, N, O - DO NOT CHANGE - must match JSON file keys
+	const jsonKeyOrder = ['agreeableness', 'conscientiousness', 'extraversion', 'negative_emotionality', 'open_mindedness'];
 	const prefixes: Record<string, string> = {
 		agreeableness: 'A',
 		conscientiousness: 'C',
 		extraversion: 'E',
-		open_mindedness: 'O',
-		negative_emotionality: 'N'
+		negative_emotionality: 'N',
+		open_mindedness: 'O'
 	};
 	return jsonKeyOrder.map((id) => `${prefixes[id]}${Math.round($scores[id])}`).join(',');
 });
