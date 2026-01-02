@@ -15,6 +15,10 @@
 	import { sfx } from '$lib/stores/sounds';
 	import { archetypeSetId } from '$lib/stores/archetypeSet';
 
+	// View mode: 'characters' shows archetypes in current set, 'sets' shows archetype sets
+	type ViewMode = 'characters' | 'sets';
+	let viewMode = $state<ViewMode>('characters');
+
 	// Get current set
 	let currentSet = $derived(ARCHETYPE_SETS.find(s => s.id === $archetypeSetId) ?? ARCHETYPE_SETS[0]);
 
@@ -179,91 +183,117 @@
 
 	// Handle set selection
 	function selectSet(set: ArchetypeSet) {
-		if (set.id === $archetypeSetId) return; // Already selected
 		archetypeSetId.set(set.id);
 		sfx.archetypeSelect();
 		// Unfreeze list when changing sets
 		unfreezeList();
 		// Clear selection when changing sets
 		selectedArchetypeId = null;
+		// Switch back to characters view
+		viewMode = 'characters';
+	}
+
+	// Toggle between views
+	function toggleViewMode() {
+		viewMode = viewMode === 'characters' ? 'sets' : 'characters';
+		sfx.cardFlip();
 	}
 </script>
 
 <div class="archetype-panel">
-	<!-- Set Selector Grid -->
-	<div class="set-selector-grid">
-		{#each ARCHETYPE_SETS as set}
-			<button
-				class="set-tab"
-				class:selected={set.id === $archetypeSetId}
-				onclick={() => selectSet(set)}
-				title="{set.name}: {set.description}"
-			>
-				<div class="set-tab-icon">
-					{@html set.svg}
-				</div>
-			</button>
-		{/each}
-	</div>
-
-	<!-- Header showing current best match -->
+	<!-- Header with view toggle -->
 	<div class="panel-header">
-		<div class="best-match-info">
-			{#if bestMatch.isCipher}
-				<span class="best-match-label">Current: </span>
-				<span class="best-match-name">{CIPHER.name}</span>
-			{:else}
-				<span class="best-match-label">Best match: </span>
-				<span class="best-match-name">{bestMatch.archetype.name}</span>
-			{/if}
-			<span class="match-quality">{Math.round(bestMatch.matchQuality)}%</span>
-		</div>
-	</div>
-
-	<!-- Scrollable archetype list -->
-	<div class="archetype-list" bind:this={scrollContainer}>
-		{#each sortedArchetypes as { archetype, distance, matchQuality }, i}
-			{@const isBestMatch = i === 0 && !bestMatch.isCipher}
-			{@const isSelected = selectedArchetypeId === archetype.id}
-			<button
-				class="archetype-item"
-				class:best-match={isBestMatch}
-				class:selected={isSelected}
-				data-archetype-id={archetype.id}
-				style="opacity: {getOpacity(matchQuality)};"
-				onclick={() => selectArchetype(archetype)}
-				title="{archetype.name}: {archetype.description}"
-			>
-				<div class="icon-wrapper">
-					{@html archetype.svg}
-				</div>
-				<div class="archetype-info">
-					<span class="archetype-name">{archetype.name}</span>
-					<span class="archetype-quality">{Math.round(matchQuality)}%</span>
-				</div>
-			</button>
-		{/each}
-
-		<!-- Cipher at the end (or highlighted if best match exceeds threshold) -->
-		<button
-			class="archetype-item cipher-item"
-			class:best-match={bestMatch.isCipher}
-			class:selected={isCipherSelected}
-			data-archetype-id={CIPHER.id}
-			style="opacity: {isCipherSelected || bestMatch.isCipher ? 1 : 0.4};"
-			onclick={selectCipher}
-			title="{CIPHER.name}: {CIPHER.description}"
-		>
-			<div class="icon-wrapper">
-				{@html CIPHER.svg}
-			</div>
-			<div class="archetype-info">
-				<span class="archetype-name">{CIPHER.name}</span>
-				{#if bestMatch.isCipher}
-					<span class="archetype-quality">Custom</span>
+		<button class="view-toggle" onclick={toggleViewMode} title="Switch between Characters and Sets">
+			<div class="toggle-icon">
+				{#if viewMode === 'characters'}
+					{@html currentSet.svg}
+				{:else}
+					<span class="toggle-grid-icon">⊞</span>
 				{/if}
 			</div>
+			<span class="toggle-label">
+				{viewMode === 'characters' ? currentSet.name : 'Sets'}
+			</span>
+			<span class="toggle-chevron">▾</span>
 		</button>
+		{#if viewMode === 'characters'}
+			<div class="best-match-info">
+				{#if bestMatch.isCipher}
+					<span class="best-match-name">{CIPHER.name}</span>
+				{:else}
+					<span class="best-match-name">{bestMatch.archetype.name}</span>
+				{/if}
+				<span class="match-quality">{Math.round(bestMatch.matchQuality)}%</span>
+			</div>
+		{/if}
+	</div>
+
+	<!-- Scrollable list (shared between both views) -->
+	<div class="archetype-list" bind:this={scrollContainer}>
+		{#if viewMode === 'characters'}
+			<!-- Characters in current set -->
+			{#each sortedArchetypes as { archetype, distance, matchQuality }, i}
+				{@const isBestMatch = i === 0 && !bestMatch.isCipher}
+				{@const isSelected = selectedArchetypeId === archetype.id}
+				<button
+					class="archetype-item"
+					class:best-match={isBestMatch}
+					class:selected={isSelected}
+					data-archetype-id={archetype.id}
+					style="opacity: {getOpacity(matchQuality)};"
+					onclick={() => selectArchetype(archetype)}
+					title="{archetype.name}: {archetype.description}"
+				>
+					<div class="icon-wrapper">
+						{@html archetype.svg}
+					</div>
+					<div class="archetype-info">
+						<span class="archetype-name">{archetype.name}</span>
+						<span class="archetype-quality">{Math.round(matchQuality)}%</span>
+					</div>
+				</button>
+			{/each}
+
+			<!-- Cipher at the end -->
+			<button
+				class="archetype-item cipher-item"
+				class:best-match={bestMatch.isCipher}
+				class:selected={isCipherSelected}
+				data-archetype-id={CIPHER.id}
+				style="opacity: {isCipherSelected || bestMatch.isCipher ? 1 : 0.4};"
+				onclick={selectCipher}
+				title="{CIPHER.name}: {CIPHER.description}"
+			>
+				<div class="icon-wrapper">
+					{@html CIPHER.svg}
+				</div>
+				<div class="archetype-info">
+					<span class="archetype-name">{CIPHER.name}</span>
+					{#if bestMatch.isCipher}
+						<span class="archetype-quality">Custom</span>
+					{/if}
+				</div>
+			</button>
+		{:else}
+			<!-- Archetype Sets -->
+			{#each ARCHETYPE_SETS as set}
+				{@const isSelected = set.id === $archetypeSetId}
+				<button
+					class="archetype-item"
+					class:selected={isSelected}
+					onclick={() => selectSet(set)}
+					title="{set.name}: {set.description}"
+				>
+					<div class="icon-wrapper">
+						{@html set.svg}
+					</div>
+					<div class="archetype-info">
+						<span class="archetype-name">{set.name}</span>
+						<span class="archetype-quality">{set.archetypes.length}</span>
+					</div>
+				</button>
+			{/each}
+		{/if}
 	</div>
 </div>
 
@@ -285,74 +315,65 @@
 		z-index: 100;
 	}
 
-	/* Set Selector Grid Styles */
-	.set-selector-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 6px;
-		padding: 8px;
-		border-bottom: 1px solid rgba(100, 116, 139, 0.2);
-		background: rgba(30, 41, 59, 0.5);
-		max-height: 180px;
-		overflow-y: auto;
-		scrollbar-width: thin;
-		scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
-	}
-
-	.set-selector-grid::-webkit-scrollbar {
-		width: 3px;
-	}
-
-	.set-selector-grid::-webkit-scrollbar-track {
-		background: transparent;
-	}
-
-	.set-selector-grid::-webkit-scrollbar-thumb {
-		background: rgba(100, 116, 139, 0.3);
-		border-radius: 2px;
-	}
-
-	.set-tab {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		aspect-ratio: 1;
-		padding: 4px;
-		background: rgba(51, 65, 85, 0.3);
-		border: 1px solid rgba(100, 116, 139, 0.2);
-		border-radius: 8px;
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-
-	.set-tab:hover {
-		background: rgba(71, 85, 105, 0.5);
-		border-color: rgba(100, 116, 139, 0.4);
-		transform: scale(1.05);
-	}
-
-	.set-tab.selected {
-		background: rgba(59, 130, 246, 0.2);
-		border-color: rgba(59, 130, 246, 0.5);
-	}
-
-	.set-tab-icon {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.set-tab-icon :global(svg) {
-		width: 100%;
-		height: 100%;
-	}
-
+	/* Panel Header with View Toggle */
 	.panel-header {
 		padding: 8px;
 		border-bottom: 1px solid rgba(100, 116, 139, 0.2);
 		background: rgba(30, 41, 59, 0.5);
+	}
+
+	.view-toggle {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 6px;
+		background: rgba(51, 65, 85, 0.5);
+		border: 1px solid rgba(100, 116, 139, 0.3);
+		border-radius: 8px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		margin-bottom: 6px;
+	}
+
+	.view-toggle:hover {
+		background: rgba(71, 85, 105, 0.6);
+		border-color: rgba(100, 116, 139, 0.5);
+	}
+
+	.toggle-icon {
+		width: 24px;
+		height: 24px;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.toggle-icon :global(svg) {
+		width: 100%;
+		height: 100%;
+	}
+
+	.toggle-grid-icon {
+		font-size: 18px;
+		color: #94a3b8;
+	}
+
+	.toggle-label {
+		flex: 1;
+		font-size: 9px;
+		color: #94a3b8;
+		text-align: left;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.toggle-chevron {
+		font-size: 10px;
+		color: #64748b;
+		flex-shrink: 0;
 	}
 
 	.best-match-info {
@@ -361,13 +382,6 @@
 		align-items: center;
 		gap: 2px;
 		text-align: center;
-	}
-
-	.best-match-label {
-		font-size: 9px;
-		color: #64748b;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
 	}
 
 	.best-match-name {
