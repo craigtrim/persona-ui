@@ -432,8 +432,28 @@
 	}
 
 	.archetype-item.selected {
-		background: rgba(59, 130, 246, 0.15);
-		border-color: rgba(59, 130, 246, 0.4);
+		background: rgba(59, 130, 246, 0.25);
+		border-color: rgba(59, 130, 246, 0.8);
+		box-shadow:
+			0 0 20px rgba(59, 130, 246, 0.6),
+			0 0 40px rgba(59, 130, 246, 0.4),
+			0 0 60px rgba(59, 130, 246, 0.2),
+			inset 0 0 15px rgba(59, 130, 246, 0.15);
+	}
+
+	.archetype-item.selected .icon-wrapper {
+		filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.8)) drop-shadow(0 0 24px rgba(59, 130, 246, 0.5));
+		transform: scale(1.1);
+	}
+
+	.archetype-item.selected .archetype-name {
+		color: #93c5fd;
+		text-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+	}
+
+	.archetype-item.selected .archetype-quality {
+		color: #60a5fa;
+		text-shadow: 0 0 6px rgba(59, 130, 246, 0.5);
 	}
 
 	.icon-wrapper {
