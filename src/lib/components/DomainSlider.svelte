@@ -202,7 +202,7 @@
 							<button
 								class="keyword-tag px-2 py-1 text-xs rounded-full transition-all duration-200"
 								class:selected={selectedKeyword === keyword}
-								style="border-left: 2px solid {selectedKeyword === keyword ? config.colorHigh : 'rgb(71 85 105)'}; background: {selectedKeyword === keyword ? 'rgba(100, 116, 139, 0.5)' : 'rgba(51, 65, 85, 0.7)'}; color: {selectedKeyword === keyword ? '#e2e8f0' : '#cbd5e1'};"
+								style="border-left: 2px solid {config.colorHigh}; {selectedKeyword === keyword ? `box-shadow: 0 0 8px ${config.colorHigh}40;` : ''}"
 								onclick={() => handleKeywordClick(keyword)}
 							>
 								{keyword}
@@ -330,6 +330,13 @@
 	.keyword-tag {
 		cursor: pointer;
 		border: none;
+		background: rgba(51, 65, 85, 0.7);
+		color: #cbd5e1;
+	}
+
+	.keyword-tag.selected {
+		background: rgba(71, 85, 105, 0.6);
+		color: #f1f5f9;
 	}
 
 	.keyword-tag:hover {
