@@ -141,7 +141,7 @@
 	<div
 		class="drawer"
 		class:open={isOpen}
-		style="transform: translateY({isOpen ? dragY : Math.min(0, dragY)}px);"
+		style={isDragging ? `transform: translateY(${isOpen ? dragY : `calc(100% - 60px + ${dragY}px)`})` : ''}
 		role="dialog"
 		aria-label="Archetype selector"
 	>
