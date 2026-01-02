@@ -9,6 +9,7 @@
 import { GREEN_EMBER_ARCHETYPES } from './greenEmberArchetypes';
 import { GREEK_MYTHOLOGY_ARCHETYPES, GREEK_MYTHOLOGY_META_SVG } from './greekMythologyArchetypes';
 import { ROMAN_MYTHOLOGY_ARCHETYPES, ROMAN_MYTHOLOGY_META_SVG } from './romanMythologyArchetypes';
+import { NORSE_MYTHOLOGY_ARCHETYPES, NORSE_MYTHOLOGY_META_SVG } from './norseMythologyArchetypes';
 
 export interface ArchetypeDefinition {
 	id: string;
@@ -1074,6 +1075,13 @@ export const ARCHETYPE_SETS: ArchetypeSet[] = [
 		description: '47 characters from Roman mythology and legendary heroes',
 		svg: ROMAN_MYTHOLOGY_META_SVG,
 		archetypes: ROMAN_MYTHOLOGY_ARCHETYPES
+	},
+	{
+		id: 'norse-mythology',
+		name: 'Norse Mythology',
+		description: '20 characters from Norse mythology and legends',
+		svg: NORSE_MYTHOLOGY_META_SVG,
+		archetypes: NORSE_MYTHOLOGY_ARCHETYPES
 	}
 ];
 
