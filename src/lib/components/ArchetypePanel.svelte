@@ -289,11 +289,11 @@
 	.set-selector-grid {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		gap: 4px;
-		padding: 6px;
+		gap: 6px;
+		padding: 8px;
 		border-bottom: 1px solid rgba(100, 116, 139, 0.2);
 		background: rgba(30, 41, 59, 0.5);
-		max-height: 120px;
+		max-height: 180px;
 		overflow-y: auto;
 		scrollbar-width: thin;
 		scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
@@ -316,10 +316,11 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 6px;
+		aspect-ratio: 1;
+		padding: 4px;
 		background: rgba(51, 65, 85, 0.3);
 		border: 1px solid rgba(100, 116, 139, 0.2);
-		border-radius: 6px;
+		border-radius: 8px;
 		cursor: pointer;
 		transition: all 0.2s ease;
 	}
@@ -327,6 +328,7 @@
 	.set-tab:hover {
 		background: rgba(71, 85, 105, 0.5);
 		border-color: rgba(100, 116, 139, 0.4);
+		transform: scale(1.05);
 	}
 
 	.set-tab.selected {
@@ -335,8 +337,8 @@
 	}
 
 	.set-tab-icon {
-		width: 28px;
-		height: 28px;
+		width: 100%;
+		height: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
