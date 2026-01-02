@@ -301,10 +301,9 @@
 	.archetype-panel {
 		position: fixed;
 		left: 16px;
-		top: 50%;
-		transform: translateY(-50%);
+		top: 100px;
 		width: 90px;
-		max-height: 80vh;
+		max-height: calc(100vh - 120px);
 		background: rgba(15, 23, 42, 0.95);
 		border: 1px solid rgba(100, 116, 139, 0.3);
 		border-radius: 12px;
