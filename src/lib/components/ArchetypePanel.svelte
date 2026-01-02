@@ -16,8 +16,9 @@
 	import { archetypeSetId } from '$lib/stores/archetypeSet';
 
 	// View mode: 'characters' shows archetypes in current set, 'sets' shows archetype sets
+	// Start on 'sets' view so user picks an archetype set first
 	type ViewMode = 'characters' | 'sets';
-	let viewMode = $state<ViewMode>('characters');
+	let viewMode = $state<ViewMode>('sets');
 
 	// Get current set
 	let currentSet = $derived(ARCHETYPE_SETS.find(s => s.id === $archetypeSetId) ?? ARCHETYPE_SETS[0]);
