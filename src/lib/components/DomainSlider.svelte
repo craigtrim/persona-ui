@@ -2,7 +2,11 @@
 	import FacetBar from './FacetBar.svelte';
 	import type { DomainConfig } from '$lib/stores/personality';
 	import domainTexts from '$lib/data/domain_texts.json';
+	import keywordPrompts from '$lib/data/keyword_prompts.json';
 	import { sfx, preloadSounds } from '$lib/stores/sounds';
+
+	// Type for keyword prompts data
+	type KeywordPromptsData = Record<string, Record<string, string>>;
 
 	interface Props {
 		config: DomainConfig;
@@ -78,6 +82,36 @@
 
 	// Check if current scores are neutral (3/3/3)
 	let isNeutral = $derived(facetScores[0] === 3 && facetScores[1] === 3 && facetScores[2] === 3);
+
+	// Track selected keyword for focused prompt display
+	let selectedKeyword = $state<string | null>(null);
+
+	// Get the focused prompt for the selected keyword
+	let focusedPrompt = $derived.by(() => {
+		if (!selectedKeyword) return null;
+		const domainPrompts = (keywordPrompts as KeywordPromptsData)[config.id];
+		if (!domainPrompts) return null;
+		return domainPrompts[selectedKeyword] || null;
+	});
+
+	// Handle keyword click - toggle selection
+	function handleKeywordClick(keyword: string) {
+		if (selectedKeyword === keyword) {
+			// Deselect if already selected
+			selectedKeyword = null;
+		} else {
+			// Select new keyword
+			selectedKeyword = keyword;
+			sfx.emojiPop();
+		}
+	}
+
+	// Clear selection when facet scores change (text entry changes)
+	$effect(() => {
+		// Access facetScores to create dependency
+		const _ = facetScores;
+		selectedKeyword = null;
+	});
 </script>
 
 <div class="flip-container mb-4" class:flipped={isFlipped}>
@@ -153,21 +187,28 @@
 			</button>
 
 			{#if textEntry}
-				<!-- Description quote -->
-				<blockquote class="text-slate-300 text-sm italic leading-relaxed mb-4 border-l-2 border-slate-600 pl-3">
-					"{textEntry.description}"
-				</blockquote>
+				<!-- Fixed layout container for consistent positioning -->
+				<div class="back-content">
+					<!-- Description quote (shows focused prompt when keyword selected) -->
+					<blockquote class="description-area text-slate-300 text-sm italic leading-relaxed border-l-2 pl-3"
+						style="border-color: {selectedKeyword ? config.colorHigh : 'rgb(71 85 105)'};"
+					>
+						"{focusedPrompt || textEntry.description}"
+					</blockquote>
 
-				<!-- Keywords as tags -->
-				<div class="flex flex-wrap gap-2">
-					{#each textEntry.keywords as keyword}
-						<span
-							class="keyword-tag px-2 py-1 text-xs rounded-full bg-slate-700/70 text-slate-300"
-							style="border-left: 2px solid {config.colorHigh};"
-						>
-							{keyword}
-						</span>
-					{/each}
+					<!-- Keywords as tags (clickable), limited to 8 -->
+					<div class="keywords-area flex flex-wrap gap-2">
+						{#each textEntry.keywords.slice(0, 8) as keyword}
+							<button
+								class="keyword-tag px-2 py-1 text-xs rounded-full transition-all duration-200"
+								class:selected={selectedKeyword === keyword}
+								style="border-left: 2px solid {selectedKeyword === keyword ? config.colorHigh : 'rgb(71 85 105)'}; background: {selectedKeyword === keyword ? 'rgba(100, 116, 139, 0.5)' : 'rgba(51, 65, 85, 0.7)'}; color: {selectedKeyword === keyword ? '#e2e8f0' : '#cbd5e1'};"
+								onclick={() => handleKeywordClick(keyword)}
+							>
+								{keyword}
+							</button>
+						{/each}
+					</div>
 				</div>
 			{:else if isNeutral}
 				<div class="text-center py-4">
@@ -218,6 +259,26 @@
 		height: 100%;
 		transform: rotateY(180deg);
 		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Fixed layout for back content */
+	.back-content {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		min-height: 0;
+	}
+
+	.description-area {
+		height: 4.5rem; /* Fixed height for ~3 lines */
+		overflow: hidden;
+		margin-bottom: 0.75rem;
+	}
+
+	.keywords-area {
+		margin-top: auto; /* Push to bottom */
 	}
 
 	.flip-header {
@@ -263,5 +324,19 @@
 		cursor: pointer;
 		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 		border: 2px solid #e2e8f0;
+	}
+
+	/* Keyword tag buttons */
+	.keyword-tag {
+		cursor: pointer;
+		border: none;
+	}
+
+	.keyword-tag:hover {
+		transform: scale(1.05);
+	}
+
+	.keyword-tag:active {
+		transform: scale(0.98);
 	}
 </style>

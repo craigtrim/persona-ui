@@ -6,6 +6,8 @@
  * For matching: H maps to 4.5, M maps to 3, L maps to 1.5
  */
 
+import { GREEN_EMBER_ARCHETYPES } from './greenEmberArchetypes';
+
 export interface ArchetypeDefinition {
 	id: string;
 	name: string;
@@ -951,3 +953,158 @@ export function getArchetypesByDistance(
  * If best match distance exceeds this, personality is too unique
  */
 export const CIPHER_THRESHOLD = 8;
+
+/**
+ * Archetype Set definitions
+ * Each set contains a collection of archetypes with a unique theme
+ */
+export interface ArchetypeSet {
+	id: string;
+	name: string;
+	description: string;
+	svg: string;
+	archetypes: ArchetypeDefinition[];
+}
+
+// Meta icon SVGs for set selector
+const ARCHETYPES_META_SVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="arch-meta-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a2a3a"/>
+      <stop offset="100%" style="stop-color:#0a1018"/>
+    </linearGradient>
+    <linearGradient id="arch-meta-fig1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6a9aba"/>
+      <stop offset="100%" style="stop-color:#3a6a8a"/>
+    </linearGradient>
+    <linearGradient id="arch-meta-fig2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9a8aba"/>
+      <stop offset="100%" style="stop-color:#6a5a8a"/>
+    </linearGradient>
+    <linearGradient id="arch-meta-fig3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8abaa0"/>
+      <stop offset="100%" style="stop-color:#5a8a70"/>
+    </linearGradient>
+    <filter id="arch-meta-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="url(#arch-meta-bg)"/>
+  <g filter="url(#arch-meta-shadow)" opacity="0.6">
+    <ellipse cx="28" cy="38" rx="10" ry="11" fill="url(#arch-meta-fig2)"/>
+    <path d="M16 78 Q14 52 28 48 Q38 50 42 64 L38 78" fill="url(#arch-meta-fig2)"/>
+  </g>
+  <g filter="url(#arch-meta-shadow)" opacity="0.6">
+    <ellipse cx="72" cy="38" rx="10" ry="11" fill="url(#arch-meta-fig3)"/>
+    <path d="M60 78 Q58 52 72 48 Q82 50 86 64 L82 78" fill="url(#arch-meta-fig3)"/>
+  </g>
+  <g filter="url(#arch-meta-shadow)">
+    <ellipse cx="50" cy="32" rx="12" ry="13" fill="url(#arch-meta-fig1)"/>
+    <path d="M36 82 Q34 50 50 46 Q66 50 68 66 L64 82" fill="url(#arch-meta-fig1)"/>
+  </g>
+  <g opacity="0.4">
+    <polygon points="50,68 42,74 44,82 56,82 58,74" fill="none" stroke="#6a8aaa" stroke-width="1.5"/>
+  </g>
+</svg>`;
+
+const GREEN_EMBER_META_SVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ge-meta-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a2a1e"/>
+      <stop offset="100%" style="stop-color:#0a1410"/>
+    </linearGradient>
+    <linearGradient id="ge-meta-ember" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#ccda7a"/>
+      <stop offset="50%" style="stop-color:#8aba5a"/>
+      <stop offset="100%" style="stop-color:#4a7a3a"/>
+    </linearGradient>
+    <linearGradient id="ge-meta-fur" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8aaa8a"/>
+      <stop offset="100%" style="stop-color:#4a6a4a"/>
+    </linearGradient>
+    <filter id="ge-meta-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="ge-meta-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="url(#ge-meta-bg)"/>
+  <ellipse cx="50" cy="50" rx="24" ry="28" fill="#aaba6a" opacity="0.15" filter="url(#ge-meta-glow)"/>
+  <g filter="url(#ge-meta-shadow)">
+    <path d="M50 22 L66 42 L58 78 L42 78 L34 42 Z" fill="url(#ge-meta-ember)"/>
+    <path d="M50 22 L50 50 L34 42 Z" fill="#daea9a" opacity="0.3"/>
+    <path d="M50 50 L66 42 L58 78 Z" fill="#3a5a2a" opacity="0.3"/>
+  </g>
+  <g opacity="0.5">
+    <ellipse cx="24" cy="40" rx="5" ry="16" fill="url(#ge-meta-fur)" transform="rotate(-15 24 40)"/>
+    <ellipse cx="76" cy="40" rx="5" ry="16" fill="url(#ge-meta-fur)" transform="rotate(15 76 40)"/>
+  </g>
+  <ellipse cx="48" cy="40" rx="6" ry="10" fill="#eefa9a" opacity="0.4"/>
+</svg>`;
+
+export const ARCHETYPE_SETS: ArchetypeSet[] = [
+	{
+		id: 'generic',
+		name: 'Generic',
+		description: 'Classic personality archetypes',
+		svg: ARCHETYPES_META_SVG,
+		archetypes: ARCHETYPES
+	},
+	{
+		id: 'green-ember',
+		name: 'Green Ember',
+		description: 'Characters from the Green Ember series',
+		svg: GREEN_EMBER_META_SVG,
+		archetypes: GREEN_EMBER_ARCHETYPES
+	}
+];
+
+/**
+ * Get archetypes for a specific set
+ */
+export function getArchetypesForSet(setId: string): ArchetypeDefinition[] {
+	const set = ARCHETYPE_SETS.find(s => s.id === setId);
+	return set?.archetypes ?? ARCHETYPES;
+}
+
+/**
+ * Get all archetypes from a set sorted by distance from current scores
+ */
+export function getArchetypesByDistanceForSet(
+	uiScores: Record<string, number>,
+	setId: string
+): Array<{ archetype: ArchetypeDefinition; distance: number; matchQuality: number }> {
+	const archetypes = getArchetypesForSet(setId);
+	return archetypes.map(archetype => {
+		const distance = calculateArchetypeDistance(uiScores, archetype);
+		return {
+			archetype,
+			distance,
+			matchQuality: calculateMatchQuality(distance)
+		};
+	}).sort((a, b) => a.distance - b.distance);
+}
+
+/**
+ * Find the best matching archetype for given scores within a specific set
+ */
+export function findBestArchetypeForSet(
+	uiScores: Record<string, number>,
+	setId: string
+): { archetype: ArchetypeDefinition; distance: number } {
+	const archetypes = getArchetypesForSet(setId);
+	let bestArchetype = archetypes[0];
+	let bestDistance = Infinity;
+
+	for (const archetype of archetypes) {
+		const distance = calculateArchetypeDistance(uiScores, archetype);
+		if (distance < bestDistance) {
+			bestDistance = distance;
+			bestArchetype = archetype;
+		}
+	}
+
+	return { archetype: bestArchetype, distance: bestDistance };
+}

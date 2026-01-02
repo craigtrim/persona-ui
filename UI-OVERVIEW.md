@@ -229,6 +229,7 @@ let textEntry = $derived.by(() => {
 | `personality_summaries.json` | Punchy summaries (v1) for prompt panel front | `A1,C2,E3,N4,O5` | Manual/LLM generated |
 | `personality_summaries_v2.json` | Serious summaries (v2) for prompt panel front | `A1,C2,E3,N4,O5` | Manual/LLM generated |
 | `domain_texts.json` | Domain descriptions + keywords for domain panel back | `domain_f1_f2_f3` | `gen_domain_text_structure.py` |
+| `keyword_prompts.json` | Focused prompts for individual keywords | `domain.keyword` | `gen_keyword_prompts.py` |
 | `facet_keywords.json` | TF-IDF keywords per facet/score | Nested structure | `analyze_facet_keywords.py` |
 | `archetypes.ts` | Predefined archetype definitions | N/A | Manual |
 
@@ -286,26 +287,45 @@ Record<string, [number, number, number]>
 
 ---
 
-## 9. UPCOMING FEATURES
+## 9. CLICKABLE KEYWORDS
 
-### Clickable Keywords (In Progress)
+**Component**: `DomainSlider.svelte` (back face)
 
-**Data File**: `persona-api/persona_api/data/keyword_prompts.json` (being generated)
+**Data Source**: `src/lib/data/keyword_prompts.json`
 
-**Purpose**: When user clicks a keyword on domain panel back, show a focused prompt for just that keyword instead of the harmonized multi-keyword prompt.
+**Purpose**: When user clicks a keyword tag on domain panel back, the description text changes to show a focused prompt for just that keyword.
 
-**Structure**:
+**Data Structure**:
 ```json
 {
     "agreeableness": {
         "acknowledges feelings": "Always respond by validating and acknowledging...",
-        "actively assists": "Always offer helpful suggestions and support..."
+        "actively assists": "Always offer helpful suggestions and support...",
+        "disrespectful tone": "Avoid using any disrespectful or condescending language..."
     },
-    "extraversion": { ... }
+    "conscientiousness": { ... },
+    "extraversion": { ... },
+    "negative_emotionality": { ... },
+    "open_mindedness": { ... }
 }
 ```
 
-**Generation**: `gen_keyword_prompts.py` queries Ollama for each unique keyword.
+**Behavior**:
+- Click keyword → description changes to focused prompt, keyword highlighted
+- Click same keyword again → returns to default description
+- Click different keyword → switches to that keyword's prompt
+- Change facet scores → selection cleared automatically
+
+**Sound**: Uses `emojiPop` sound on keyword selection
+
+**Generation Pipeline**:
+1. Source data: `persona-api/persona_api/data/text/<domain>/**/*.json`
+2. Script: `persona-api/scripts/gen_keyword_prompts.py`
+3. Uses Ollama (qwen2.5:7b on sparx) to generate focused prompts
+4. Output: `persona-api/persona_api/data/keyword_prompts.json`
+5. Copied to: `persona-ui/src/lib/data/keyword_prompts.json`
+
+**Stats**: 551 keywords across 5 domains (109 agreeableness, 103 conscientiousness, 123 extraversion, 120 negative_emotionality, 96 open_mindedness)
 
 ---
 
@@ -318,7 +338,50 @@ Record<string, [number, number, number]>
 
 ---
 
-## 11. CRITICAL WARNINGS
+## 11. SOUND EFFECTS
+
+**File**: `src/lib/stores/sounds.ts`
+
+**Implementation**: Uses native Web Audio API (no external dependencies). Sounds are synthesized client-side using oscillators and gain envelopes.
+
+**Available Sounds**:
+
+| Sound | Trigger | Freq/Duration | Description |
+|-------|---------|---------------|-------------|
+| `sliderTick` | Domain slider movement | 800Hz, 30ms | Square wave tick |
+| `facetTap` | Facet bar slider movement | 1200Hz, 12ms | Higher, tighter tick |
+| `cardFlip` | Flipping domain/prompt cards | 300→150Hz, 80ms | Sawtooth whoosh |
+| `emojiPop` | Tapping emoji in gradient picker | 500→700Hz, 60ms | Sine pop |
+| `archetypeSelect` | Selecting archetype from panel | 440→660Hz, 150ms | Sine chime |
+| `perfectMatch` | (disabled) Easter egg | 523→784Hz, 300ms | Celebratory tone |
+
+**Usage**:
+```typescript
+import { sfx } from '$lib/stores/sounds';
+
+sfx.sliderTick();    // Play slider tick
+sfx.cardFlip();      // Play card flip
+sfx.archetypeSelect(); // Play archetype chime
+```
+
+**Sound Toggle**: User preference stored in localStorage as `soundEnabled`. Access via `soundEnabled` store:
+```typescript
+import { soundEnabled } from '$lib/stores/sounds';
+
+soundEnabled.toggle(); // Toggle on/off
+$soundEnabled         // Current state (boolean)
+```
+
+**Integration Points**:
+- `DomainSlider.svelte`: `sliderTick` on domain slider input, `cardFlip` on flip button, `emojiPop` on keyword selection
+- `FacetBar.svelte`: `facetTap` on facet slider input
+- `PersonaSummary.svelte`: `cardFlip` on flip, `emojiPop` on emoji tap, `sliderTick` on gradient select
+- `ArchetypePanel.svelte`: `archetypeSelect` on archetype/cipher selection
+- `MobileArchetypeDrawer.svelte`: `archetypeSelect` on archetype/cipher selection
+
+---
+
+## 12. CRITICAL WARNINGS
 
 1. **Score String Order**: MUST be A,C,E,N,O. See comments in `personality.ts` lines 213-224.
 

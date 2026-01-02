@@ -1,16 +1,25 @@
 <script lang="ts">
 	import { domainScores, facetScores, setDomainScore, initialArchetypeId } from '$lib/stores/personality';
 	import {
-		ARCHETYPES,
 		CIPHER,
 		CIPHER_THRESHOLD,
-		getArchetypesByDistance,
-		findBestArchetype,
 		calculateMatchQuality,
 		calculateArchetypeDistance,
-		type ArchetypeDefinition
+		getArchetypesByDistanceForSet,
+		findBestArchetypeForSet,
+		getArchetypesForSet,
+		ARCHETYPE_SETS,
+		type ArchetypeDefinition,
+		type ArchetypeSet
 	} from '$lib/data/archetypes';
 	import { sfx } from '$lib/stores/sounds';
+	import { archetypeSetId } from '$lib/stores/archetypeSet';
+
+	// Set selector popup state
+	let showSetSelector = $state(false);
+
+	// Get current set
+	let currentSet = $derived(ARCHETYPE_SETS.find(s => s.id === $archetypeSetId) ?? ARCHETYPE_SETS[0]);
 
 	// Flag to freeze the list order when user clicks an archetype directly
 	let freezeListOrder = $state(false);
@@ -30,12 +39,12 @@
 				};
 			});
 		}
-		return getArchetypesByDistance($domainScores);
+		return getArchetypesByDistanceForSet($domainScores, $archetypeSetId);
 	});
 
 	// Best match info
 	let bestMatch = $derived.by(() => {
-		const result = findBestArchetype($domainScores);
+		const result = findBestArchetypeForSet($domainScores, $archetypeSetId);
 		return {
 			...result,
 			matchQuality: calculateMatchQuality(result.distance),
@@ -113,18 +122,11 @@
 		return profile;
 	}
 
-	// Check if a profile is too close to any defined archetype
+	// Check if a profile is too close to any defined archetype in current set
 	function isTooCloseToArchetype(profile: Record<string, number>): boolean {
-		// Create a fake archetype to use with calculateArchetypeDistance
-		const fakeArchetype = {
-			id: 'test',
-			name: 'test',
-			description: 'test',
-			traits: profile as ArchetypeDefinition['traits'],
-			svg: ''
-		};
+		const archetypes = getArchetypesForSet($archetypeSetId);
 
-		for (const archetype of ARCHETYPES) {
+		for (const archetype of archetypes) {
 			// Calculate distance from this profile to each archetype
 			const distance = calculateArchetypeDistance(profile, archetype);
 			// If distance is less than threshold, it's too close
@@ -177,9 +179,70 @@
 			setDomainScore(domain, uiValue);
 		}
 	}
+
+	// Handle set selection
+	function selectSet(set: ArchetypeSet) {
+		archetypeSetId.set(set.id);
+		sfx.archetypeSelect();
+		showSetSelector = false;
+		// Unfreeze list when changing sets
+		unfreezeList();
+		// Clear selection when changing sets
+		selectedArchetypeId = null;
+	}
+
+	// Toggle set selector
+	function toggleSetSelector() {
+		showSetSelector = !showSetSelector;
+		if (showSetSelector) {
+			sfx.cardFlip();
+		}
+	}
+
+	// Close popup when clicking outside
+	function handleClickOutside(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		if (!target.closest('.set-selector-container')) {
+			showSetSelector = false;
+		}
+	}
 </script>
 
+<svelte:window onclick={handleClickOutside} />
+
 <div class="archetype-panel">
+	<!-- Set Selector -->
+	<div class="set-selector-container">
+		<button
+			class="set-selector-trigger"
+			onclick={toggleSetSelector}
+			title="Switch archetype set: {currentSet.name}"
+		>
+			<div class="set-icon">
+				{@html currentSet.svg}
+			</div>
+			<span class="set-chevron" class:open={showSetSelector}>▾</span>
+		</button>
+
+		{#if showSetSelector}
+			<div class="set-selector-popup">
+				{#each ARCHETYPE_SETS as set}
+					<button
+						class="set-option"
+						class:selected={set.id === $archetypeSetId}
+						onclick={() => selectSet(set)}
+						title={set.description}
+					>
+						<div class="set-option-icon">
+							{@html set.svg}
+						</div>
+						<span class="set-option-name">{set.name}</span>
+					</button>
+				{/each}
+			</div>
+		{/if}
+	</div>
+
 	<!-- Header showing current best match -->
 	<div class="panel-header">
 		<div class="best-match-info">
@@ -257,6 +320,114 @@
 		overflow: hidden;
 		backdrop-filter: blur(8px);
 		z-index: 100;
+	}
+
+	/* Set Selector Styles */
+	.set-selector-container {
+		position: relative;
+		padding: 6px;
+		border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+		background: rgba(30, 41, 59, 0.7);
+	}
+
+	.set-selector-trigger {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 4px;
+		padding: 4px;
+		background: rgba(51, 65, 85, 0.5);
+		border: 1px solid rgba(100, 116, 139, 0.3);
+		border-radius: 8px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.set-selector-trigger:hover {
+		background: rgba(71, 85, 105, 0.6);
+		border-color: rgba(100, 116, 139, 0.5);
+	}
+
+	.set-icon {
+		width: 32px;
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.set-icon :global(svg) {
+		width: 100%;
+		height: 100%;
+	}
+
+	.set-chevron {
+		font-size: 10px;
+		color: #64748b;
+		transition: transform 0.2s ease;
+	}
+
+	.set-chevron.open {
+		transform: rotate(180deg);
+	}
+
+	.set-selector-popup {
+		position: absolute;
+		top: 100%;
+		left: 6px;
+		right: 6px;
+		margin-top: 4px;
+		background: rgba(15, 23, 42, 0.98);
+		border: 1px solid rgba(100, 116, 139, 0.4);
+		border-radius: 8px;
+		padding: 6px;
+		z-index: 110;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	}
+
+	.set-option {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 6px 4px;
+		background: transparent;
+		border: 1px solid transparent;
+		border-radius: 6px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.set-option:hover {
+		background: rgba(51, 65, 85, 0.5);
+		border-color: rgba(100, 116, 139, 0.3);
+	}
+
+	.set-option.selected {
+		background: rgba(59, 130, 246, 0.15);
+		border-color: rgba(59, 130, 246, 0.4);
+	}
+
+	.set-option-icon {
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.set-option-icon :global(svg) {
+		width: 100%;
+		height: 100%;
+	}
+
+	.set-option-name {
+		font-size: 9px;
+		color: #94a3b8;
+		margin-top: 2px;
 	}
 
 	.panel-header {

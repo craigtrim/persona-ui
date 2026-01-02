@@ -1,16 +1,19 @@
 <script lang="ts">
 	import { domainScores, setDomainScore, initialArchetypeId } from '$lib/stores/personality';
 	import {
-		ARCHETYPES,
 		CIPHER,
 		CIPHER_THRESHOLD,
-		getArchetypesByDistance,
-		findBestArchetype,
 		calculateMatchQuality,
 		calculateArchetypeDistance,
-		type ArchetypeDefinition
+		getArchetypesByDistanceForSet,
+		findBestArchetypeForSet,
+		getArchetypesForSet,
+		ARCHETYPE_SETS,
+		type ArchetypeDefinition,
+		type ArchetypeSet
 	} from '$lib/data/archetypes';
 	import { sfx } from '$lib/stores/sounds';
+	import { archetypeSetId } from '$lib/stores/archetypeSet';
 
 	// Drawer state
 	let isOpen = $state(false);
@@ -21,12 +24,15 @@
 	// Track selected archetype
 	let selectedArchetypeId = $state<string | null>(initialArchetypeId);
 
+	// Get current set
+	let currentSet = $derived(ARCHETYPE_SETS.find(s => s.id === $archetypeSetId) ?? ARCHETYPE_SETS[0]);
+
 	// Get sorted archetypes by distance from current scores
-	let sortedArchetypes = $derived(getArchetypesByDistance($domainScores));
+	let sortedArchetypes = $derived(getArchetypesByDistanceForSet($domainScores, $archetypeSetId));
 
 	// Best match info
 	let bestMatch = $derived.by(() => {
-		const result = findBestArchetype($domainScores);
+		const result = findBestArchetypeForSet($domainScores, $archetypeSetId);
 		return {
 			...result,
 			matchQuality: calculateMatchQuality(result.distance),
@@ -60,7 +66,8 @@
 	}
 
 	function isTooCloseToArchetype(profile: Record<string, number>): boolean {
-		for (const archetype of ARCHETYPES) {
+		const archetypes = getArchetypesForSet($archetypeSetId);
+		for (const archetype of archetypes) {
 			const distance = calculateArchetypeDistance(profile, archetype);
 			if (distance < CIPHER_THRESHOLD) return true;
 		}
@@ -88,6 +95,14 @@
 		}
 
 		isOpen = false;
+	}
+
+	// Handle set selection
+	function selectSet(set: ArchetypeSet) {
+		archetypeSetId.set(set.id);
+		sfx.archetypeSelect();
+		// Clear selection when changing sets
+		selectedArchetypeId = null;
 	}
 
 	// Touch handlers for drag gesture
@@ -168,8 +183,26 @@
 			</div>
 		</button>
 
-		<!-- Archetype grid -->
+		<!-- Drawer content -->
 		<div class="drawer-content">
+			<!-- Set selector row -->
+			<div class="set-selector-row">
+				{#each ARCHETYPE_SETS as set}
+					<button
+						class="set-button"
+						class:selected={set.id === $archetypeSetId}
+						onclick={() => selectSet(set)}
+						title={set.description}
+					>
+						<div class="set-button-icon">
+							{@html set.svg}
+						</div>
+						<span class="set-button-name">{set.name}</span>
+					</button>
+				{/each}
+			</div>
+
+			<!-- Archetype grid -->
 			<div class="archetype-grid">
 				{#each sortedArchetypes as { archetype, matchQuality }}
 					{@const isSelected = selectedArchetypeId === archetype.id}
@@ -292,6 +325,56 @@
 		overflow-y: auto;
 		padding: 8px 12px 24px;
 		-webkit-overflow-scrolling: touch;
+	}
+
+	/* Set selector row */
+	.set-selector-row {
+		display: flex;
+		gap: 8px;
+		padding: 8px 0;
+		margin-bottom: 12px;
+		border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+	}
+
+	.set-button {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 8px 4px;
+		background: rgba(30, 41, 59, 0.5);
+		border: 1px solid rgba(100, 116, 139, 0.2);
+		border-radius: 10px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.set-button:active {
+		transform: scale(0.95);
+	}
+
+	.set-button.selected {
+		background: rgba(59, 130, 246, 0.2);
+		border-color: rgba(59, 130, 246, 0.5);
+	}
+
+	.set-button-icon {
+		width: 36px;
+		height: 36px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.set-button-icon :global(svg) {
+		width: 100%;
+		height: 100%;
+	}
+
+	.set-button-name {
+		font-size: 10px;
+		color: #94a3b8;
+		margin-top: 4px;
 	}
 
 	.archetype-grid {
