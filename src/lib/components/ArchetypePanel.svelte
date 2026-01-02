@@ -432,13 +432,8 @@
 	}
 
 	.archetype-item.selected {
-		background: rgba(59, 130, 246, 0.25);
-		border-color: rgba(59, 130, 246, 0.8);
-		box-shadow:
-			0 0 20px rgba(59, 130, 246, 0.6),
-			0 0 40px rgba(59, 130, 246, 0.4),
-			0 0 60px rgba(59, 130, 246, 0.2),
-			inset 0 0 15px rgba(59, 130, 246, 0.15);
+		background: transparent;
+		border-color: transparent;
 	}
 
 	.archetype-item.selected .icon-wrapper {
