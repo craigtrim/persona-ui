@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { domainScores, facetScores, setDomainScore, initialArchetypeId } from '$lib/stores/personality';
+	import { domainScores, facetScores, setDomainScore, initialArchetypeId, selectedArchetype } from '$lib/stores/personality';
 	import {
 		CIPHER,
 		CIPHER_THRESHOLD,
@@ -65,6 +65,7 @@
 	// Handle archetype selection - set sliders to archetype's trait values
 	function selectArchetype(archetype: ArchetypeDefinition) {
 		selectedArchetypeId = archetype.id;
+		selectedArchetype.set(archetype);
 		sfx.archetypeSelect();
 
 		// Record click time so we know these slider changes are from a click, not manual adjustment
@@ -162,6 +163,7 @@
 	// Handle Cipher selection - pick a random cipher profile
 	function selectCipher() {
 		selectedArchetypeId = CIPHER.id;
+		selectedArchetype.set(CIPHER);
 		sfx.archetypeSelect();
 
 		// Record click time

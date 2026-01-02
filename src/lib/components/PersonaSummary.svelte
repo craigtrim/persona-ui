@@ -2,7 +2,7 @@
 	// ⚠️ CRITICAL: scoreString order is A,C,E,N,O (N before O) - must match JSON file keys
 	// Both scoreString and scoreStringDisplay now use the same order: A,C,E,N,O
 	// If lookups fail, you'll see fallback text like "Balanced approach to most situations"
-	import { emojiSummary, scoreString, scoreStringDisplay, DOMAINS, domainScores, setDomainScore } from '$lib/stores/personality';
+	import { emojiSummary, scoreString, scoreStringDisplay, DOMAINS, domainScores, setDomainScore, selectedArchetype } from '$lib/stores/personality';
 	import summariesTagline from '$lib/data/shared/summaries_tagline.json';
 	import summariesHeadline from '$lib/data/shared/summaries_headline.json';
 	import personaPrompts from '$lib/data/shared/persona_prompts.json';
@@ -74,13 +74,25 @@
 	}
 
 	// Get tagline summaries (with emojis stripped)
-	let taglineSummaries = $derived(
-		((summariesTagline as Record<string, string[]>)[$scoreString] || fallbackV1)
-			.map(stripEmojis)
-	);
+	// Priority: archetype.taglines > shared JSON > fallback
+	let taglineSummaries = $derived.by(() => {
+		// Check if selected archetype has custom taglines
+		if ($selectedArchetype?.taglines && $selectedArchetype.taglines.length > 0) {
+			return $selectedArchetype.taglines.map(stripEmojis);
+		}
+		// Fall back to shared JSON
+		return ((summariesTagline as Record<string, string[]>)[$scoreString] || fallbackV1)
+			.map(stripEmojis);
+	});
 
 	// Get headline summary (stable - pick longest one)
+	// Priority: archetype.headline > shared JSON > fallback
 	let headlineSummary = $derived.by(() => {
+		// Check if selected archetype has a custom headline
+		if ($selectedArchetype?.headline) {
+			return $selectedArchetype.headline;
+		}
+		// Fall back to shared JSON
 		const summaries = (summariesHeadline as Record<string, string[]>)[$scoreString] || [fallbackV2];
 		return summaries.reduce((longest, current) =>
 			current.length > longest.length ? current : longest

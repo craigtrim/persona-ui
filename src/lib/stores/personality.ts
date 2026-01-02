@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import facetKeywords from '$lib/data/shared/facet_keywords.json';
-import { ARCHETYPES } from '$lib/data/archetypes';
+import { ARCHETYPES, type ArchetypeDefinition } from '$lib/data/archetypes';
 
 export interface DomainConfig {
 	id: string;
@@ -108,6 +108,9 @@ const randomArchetype = ARCHETYPES[Math.floor(Math.random() * ARCHETYPES.length)
 
 // Export the initial archetype ID so ArchetypePanel can highlight it
 export const initialArchetypeId = randomArchetype.id;
+
+// Store for the currently selected archetype (shared between ArchetypePanel and PersonaSummary)
+export const selectedArchetype = writable<ArchetypeDefinition | null>(randomArchetype);
 
 // Initialize with a random archetype - exact trait values for 100% match
 function initializeFromRandomArchetype(): Record<string, [number, number, number]> {
