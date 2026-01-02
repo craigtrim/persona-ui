@@ -15,9 +15,6 @@
 	import { sfx } from '$lib/stores/sounds';
 	import { archetypeSetId } from '$lib/stores/archetypeSet';
 
-	// Set selector popup state
-	let showSetSelector = $state(false);
-
 	// Get current set
 	let currentSet = $derived(ARCHETYPE_SETS.find(s => s.id === $archetypeSetId) ?? ARCHETYPE_SETS[0]);
 
@@ -182,65 +179,31 @@
 
 	// Handle set selection
 	function selectSet(set: ArchetypeSet) {
+		if (set.id === $archetypeSetId) return; // Already selected
 		archetypeSetId.set(set.id);
 		sfx.archetypeSelect();
-		showSetSelector = false;
 		// Unfreeze list when changing sets
 		unfreezeList();
 		// Clear selection when changing sets
 		selectedArchetypeId = null;
 	}
-
-	// Toggle set selector
-	function toggleSetSelector() {
-		showSetSelector = !showSetSelector;
-		if (showSetSelector) {
-			sfx.cardFlip();
-		}
-	}
-
-	// Close popup when clicking outside
-	function handleClickOutside(event: MouseEvent) {
-		const target = event.target as HTMLElement;
-		if (!target.closest('.set-selector-container')) {
-			showSetSelector = false;
-		}
-	}
 </script>
 
-<svelte:window onclick={handleClickOutside} />
-
 <div class="archetype-panel">
-	<!-- Set Selector -->
-	<div class="set-selector-container">
-		<button
-			class="set-selector-trigger"
-			onclick={toggleSetSelector}
-			title="Switch archetype set: {currentSet.name}"
-		>
-			<div class="set-icon">
-				{@html currentSet.svg}
-			</div>
-			<span class="set-chevron" class:open={showSetSelector}>▾</span>
-		</button>
-
-		{#if showSetSelector}
-			<div class="set-selector-popup">
-				{#each ARCHETYPE_SETS as set}
-					<button
-						class="set-option"
-						class:selected={set.id === $archetypeSetId}
-						onclick={() => selectSet(set)}
-						title={set.description}
-					>
-						<div class="set-option-icon">
-							{@html set.svg}
-						</div>
-						<span class="set-option-name">{set.name}</span>
-					</button>
-				{/each}
-			</div>
-		{/if}
+	<!-- Set Selector Grid -->
+	<div class="set-selector-grid">
+		{#each ARCHETYPE_SETS as set}
+			<button
+				class="set-tab"
+				class:selected={set.id === $archetypeSetId}
+				onclick={() => selectSet(set)}
+				title="{set.name}: {set.description}"
+			>
+				<div class="set-tab-icon">
+					{@html set.svg}
+				</div>
+			</button>
+		{/each}
 	</div>
 
 	<!-- Header showing current best match -->
@@ -322,112 +285,66 @@
 		z-index: 100;
 	}
 
-	/* Set Selector Styles */
-	.set-selector-container {
-		position: relative;
+	/* Set Selector Grid Styles */
+	.set-selector-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 4px;
 		padding: 6px;
 		border-bottom: 1px solid rgba(100, 116, 139, 0.2);
-		background: rgba(30, 41, 59, 0.7);
+		background: rgba(30, 41, 59, 0.5);
+		max-height: 120px;
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
 	}
 
-	.set-selector-trigger {
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 4px;
-		padding: 4px;
-		background: rgba(51, 65, 85, 0.5);
-		border: 1px solid rgba(100, 116, 139, 0.3);
-		border-radius: 8px;
-		cursor: pointer;
-		transition: all 0.2s ease;
+	.set-selector-grid::-webkit-scrollbar {
+		width: 3px;
 	}
 
-	.set-selector-trigger:hover {
-		background: rgba(71, 85, 105, 0.6);
-		border-color: rgba(100, 116, 139, 0.5);
-	}
-
-	.set-icon {
-		width: 32px;
-		height: 32px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.set-icon :global(svg) {
-		width: 100%;
-		height: 100%;
-	}
-
-	.set-chevron {
-		font-size: 10px;
-		color: #64748b;
-		transition: transform 0.2s ease;
-	}
-
-	.set-chevron.open {
-		transform: rotate(180deg);
-	}
-
-	.set-selector-popup {
-		position: absolute;
-		top: 100%;
-		left: 6px;
-		right: 6px;
-		margin-top: 4px;
-		background: rgba(15, 23, 42, 0.98);
-		border: 1px solid rgba(100, 116, 139, 0.4);
-		border-radius: 8px;
-		padding: 6px;
-		z-index: 110;
-		display: flex;
-		flex-direction: column;
-		gap: 4px;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-	}
-
-	.set-option {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 6px 4px;
+	.set-selector-grid::-webkit-scrollbar-track {
 		background: transparent;
-		border: 1px solid transparent;
+	}
+
+	.set-selector-grid::-webkit-scrollbar-thumb {
+		background: rgba(100, 116, 139, 0.3);
+		border-radius: 2px;
+	}
+
+	.set-tab {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 6px;
+		background: rgba(51, 65, 85, 0.3);
+		border: 1px solid rgba(100, 116, 139, 0.2);
 		border-radius: 6px;
 		cursor: pointer;
 		transition: all 0.2s ease;
 	}
 
-	.set-option:hover {
-		background: rgba(51, 65, 85, 0.5);
-		border-color: rgba(100, 116, 139, 0.3);
+	.set-tab:hover {
+		background: rgba(71, 85, 105, 0.5);
+		border-color: rgba(100, 116, 139, 0.4);
 	}
 
-	.set-option.selected {
-		background: rgba(59, 130, 246, 0.15);
-		border-color: rgba(59, 130, 246, 0.4);
+	.set-tab.selected {
+		background: rgba(59, 130, 246, 0.2);
+		border-color: rgba(59, 130, 246, 0.5);
 	}
 
-	.set-option-icon {
-		width: 40px;
-		height: 40px;
+	.set-tab-icon {
+		width: 28px;
+		height: 28px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 
-	.set-option-icon :global(svg) {
+	.set-tab-icon :global(svg) {
 		width: 100%;
 		height: 100%;
-	}
-
-	.set-option-name {
-		font-size: 9px;
-		color: #94a3b8;
-		margin-top: 2px;
 	}
 
 	.panel-header {
