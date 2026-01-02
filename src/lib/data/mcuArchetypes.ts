@@ -149,42 +149,54 @@ export const MCU_ARCHETYPES: ArchetypeDefinition[] = [
 		name: 'Iron Man',
 		description: 'Genius billionaire inventor with a heart of arc reactor',
 		traits: { agreeableness: 3, conscientiousness: 4, extraversion: 5, negative_emotionality: 3, open_mindedness: 5 },
-		svg: IRON_MAN_SVG
+		svg: IRON_MAN_SVG,
+		headline: 'Brilliant innovator who lights up every room with charisma and unconventional solutions',
+		taglines: ['Genius with a flair for the dramatic', 'The futurist who builds tomorrow today', 'Sharp wit meets sharper mind']
 	},
 	{
 		id: 'mcu-captain-america',
 		name: 'Captain America',
 		description: 'Super soldier and moral compass of the Avengers',
 		traits: { agreeableness: 5, conscientiousness: 5, extraversion: 4, negative_emotionality: 2, open_mindedness: 2 },
-		svg: CAPTAIN_AMERICA_SVG
+		svg: CAPTAIN_AMERICA_SVG,
+		headline: 'Steadfast leader who inspires others through unwavering principles and genuine compassion',
+		taglines: ['The shield that never wavers', 'Duty-bound heart of gold', 'Where others bend, he stands firm']
 	},
 	{
 		id: 'mcu-thor',
 		name: 'Thor',
 		description: 'God of Thunder, prince of Asgard',
 		traits: { agreeableness: 3, conscientiousness: 2, extraversion: 5, negative_emotionality: 3, open_mindedness: 3 },
-		svg: THOR_SVG
+		svg: THOR_SVG,
+		headline: 'Boisterous warrior who charges into life with thunderous enthusiasm and royal confidence',
+		taglines: ['Thunder and bravado in equal measure', 'The prince who loves a good battle', 'Larger than life in every way']
 	},
 	{
 		id: 'mcu-hulk',
 		name: 'Hulk',
 		description: 'Gamma-powered scientist with anger management issues',
 		traits: { agreeableness: 4, conscientiousness: 3, extraversion: 2, negative_emotionality: 5, open_mindedness: 4 },
-		svg: HULK_SVG
+		svg: HULK_SVG,
+		headline: 'Brilliant scientist wrestling with inner turmoil who channels intensity into protecting others',
+		taglines: ['Calm mind, raging heart', 'The storm within seeks peace', 'Strength born from struggle']
 	},
 	{
 		id: 'mcu-black-widow',
 		name: 'Black Widow',
 		description: 'Master spy and assassin seeking redemption',
 		traits: { agreeableness: 3, conscientiousness: 5, extraversion: 3, negative_emotionality: 3, open_mindedness: 3 },
-		svg: BLACK_WIDOW_SVG
+		svg: BLACK_WIDOW_SVG,
+		headline: 'Calculated operative who balances lethal precision with a drive to clear the red from her ledger',
+		taglines: ['The spy who chose her own side', 'Precision wrapped in mystery', 'Debts paid in dedication']
 	},
 	{
 		id: 'mcu-hawkeye',
 		name: 'Hawkeye',
 		description: 'Master archer and devoted family man',
 		traits: { agreeableness: 4, conscientiousness: 4, extraversion: 3, negative_emotionality: 3, open_mindedness: 2 },
-		svg: HAWKEYE_SVG
+		svg: HAWKEYE_SVG,
+		headline: 'Grounded marksman who never misses what matters most—his target or his family',
+		taglines: ['The human among gods', 'Every arrow has purpose', 'Family man with perfect aim']
 	},
 	// Tier 2: New Avengers (5)
 	{
@@ -192,35 +204,45 @@ export const MCU_ARCHETYPES: ArchetypeDefinition[] = [
 		name: 'Scarlet Witch',
 		description: 'Reality-warping chaos magic wielder',
 		traits: { agreeableness: 3, conscientiousness: 2, extraversion: 3, negative_emotionality: 4, open_mindedness: 4 },
-		svg: SCARLET_WITCH_SVG
+		svg: SCARLET_WITCH_SVG,
+		headline: 'Powerful empath whose deep feelings fuel reality-bending abilities and fierce protectiveness',
+		taglines: ['Chaos magic born from love', 'The weight of power and loss', 'Reality bends to her grief']
 	},
 	{
 		id: 'mcu-vision',
 		name: 'Vision',
 		description: 'Synthetic being powered by the Mind Stone',
 		traits: { agreeableness: 5, conscientiousness: 5, extraversion: 2, negative_emotionality: 1, open_mindedness: 4 },
-		svg: VISION_SVG
+		svg: VISION_SVG,
+		headline: 'Serene synthetic being who contemplates humanity with philosophical calm and gentle wisdom',
+		taglines: ['Logic tempered by compassion', 'Born of stone, made of heart', 'The machine who chose to feel']
 	},
 	{
 		id: 'mcu-falcon',
 		name: 'Falcon',
 		description: 'Winged soldier and future Captain America',
 		traits: { agreeableness: 4, conscientiousness: 4, extraversion: 4, negative_emotionality: 2, open_mindedness: 3 },
-		svg: FALCON_SVG
+		svg: FALCON_SVG,
+		headline: 'Confident wingman who soars into action with loyalty, courage, and unwavering optimism',
+		taglines: ['On your left', 'Wings of determination', 'Rising to meet every challenge']
 	},
 	{
 		id: 'mcu-winter-soldier',
 		name: 'Winter Soldier',
 		description: 'Brainwashed assassin seeking redemption',
 		traits: { agreeableness: 3, conscientiousness: 4, extraversion: 2, negative_emotionality: 4, open_mindedness: 2 },
-		svg: WINTER_SOLDIER_SVG
+		svg: WINTER_SOLDIER_SVG,
+		headline: 'Haunted soldier rebuilding his identity one act of atonement at a time',
+		taglines: ['The ghost seeking daylight', 'Memory is a battlefield', 'Making amends in silence']
 	},
 	{
 		id: 'mcu-ant-man',
 		name: 'Ant-Man',
 		description: 'Size-changing thief turned hero',
 		traits: { agreeableness: 4, conscientiousness: 2, extraversion: 4, negative_emotionality: 3, open_mindedness: 4 },
-		svg: ANT_MAN_SVG
+		svg: ANT_MAN_SVG,
+		headline: 'Lovable underdog who stumbles into heroism with humor, heart, and creative problem-solving',
+		taglines: ['Small hero, big heart', 'Winging it at any size', 'The ex-con who saved the world']
 	},
 	// Tier 3: Guardians of the Galaxy (6)
 	{
@@ -228,42 +250,54 @@ export const MCU_ARCHETYPES: ArchetypeDefinition[] = [
 		name: 'Star-Lord',
 		description: 'Half-celestial outlaw and legendary dancer',
 		traits: { agreeableness: 3, conscientiousness: 1, extraversion: 5, negative_emotionality: 3, open_mindedness: 4 },
-		svg: STAR_LORD_SVG
+		svg: STAR_LORD_SVG,
+		headline: 'Swaggering space outlaw who masks deep insecurity with bravado, mixtapes, and questionable plans',
+		taglines: ['Legendary outlaw, self-proclaimed', 'Dancing through the galaxy', 'Plans are more like guidelines']
 	},
 	{
 		id: 'mcu-gamora',
 		name: 'Gamora',
 		description: 'Deadliest woman in the galaxy',
 		traits: { agreeableness: 3, conscientiousness: 5, extraversion: 3, negative_emotionality: 3, open_mindedness: 2 },
-		svg: GAMORA_SVG
+		svg: GAMORA_SVG,
+		headline: 'Disciplined warrior who channels deadly precision into protecting the found family she never expected',
+		taglines: ['Deadliest woman alive', 'Raised for war, fighting for peace', 'Blade meets heart']
 	},
 	{
 		id: 'mcu-drax',
 		name: 'Drax',
 		description: 'Literal-minded destroyer seeking vengeance',
 		traits: { agreeableness: 3, conscientiousness: 2, extraversion: 4, negative_emotionality: 2, open_mindedness: 1 },
-		svg: DRAX_SVG
+		svg: DRAX_SVG,
+		headline: 'Literal-minded warrior whose straightforward honesty and brute strength hide surprising depth',
+		taglines: ['Nothing goes over his head', 'Destroyer with a tender side', 'Invisibly standing still']
 	},
 	{
 		id: 'mcu-rocket',
 		name: 'Rocket',
 		description: 'Genetically modified raccoon with big guns',
 		traits: { agreeableness: 2, conscientiousness: 3, extraversion: 4, negative_emotionality: 4, open_mindedness: 4 },
-		svg: ROCKET_SVG
+		svg: ROCKET_SVG,
+		headline: 'Abrasive weapons expert whose prickly exterior protects deep wounds and fierce loyalty',
+		taglines: ['Not a raccoon', 'Guns bigger than his grudges', 'Broken and brilliant']
 	},
 	{
 		id: 'mcu-groot',
 		name: 'Groot',
 		description: 'Flora colossus of few words',
 		traits: { agreeableness: 5, conscientiousness: 3, extraversion: 2, negative_emotionality: 1, open_mindedness: 2 },
-		svg: GROOT_SVG
+		svg: GROOT_SVG,
+		headline: 'Gentle giant whose three words carry infinite meaning and unconditional love for his friends',
+		taglines: ['I am Groot', 'Rooted in loyalty', 'Simple words, profound heart']
 	},
 	{
 		id: 'mcu-nebula',
 		name: 'Nebula',
 		description: "Thanos's cybernetic daughter seeking identity",
 		traits: { agreeableness: 2, conscientiousness: 4, extraversion: 2, negative_emotionality: 4, open_mindedness: 2 },
-		svg: NEBULA_SVG
+		svg: NEBULA_SVG,
+		headline: 'Scarred survivor slowly learning that strength comes from connection, not competition',
+		taglines: ['Forged in rivalry', 'More machine, becoming more human', 'Sister by choice']
 	},
 	// Tier 4: Solo Heroes (4)
 	{
@@ -271,28 +305,36 @@ export const MCU_ARCHETYPES: ArchetypeDefinition[] = [
 		name: 'Spider-Man',
 		description: 'Friendly neighborhood web-slinger',
 		traits: { agreeableness: 5, conscientiousness: 3, extraversion: 4, negative_emotionality: 3, open_mindedness: 4 },
-		svg: SPIDER_MAN_SVG
+		svg: SPIDER_MAN_SVG,
+		headline: 'Earnest young hero juggling great power and responsibility with homework and heartbreak',
+		taglines: ['Friendly neighborhood hero', 'With great power...', 'Quips and webs in equal measure']
 	},
 	{
 		id: 'mcu-black-panther',
 		name: 'Black Panther',
 		description: 'King of Wakanda and protector of his people',
 		traits: { agreeableness: 4, conscientiousness: 5, extraversion: 3, negative_emotionality: 2, open_mindedness: 3 },
-		svg: BLACK_PANTHER_SVG
+		svg: BLACK_PANTHER_SVG,
+		headline: 'Noble king who balances ancient tradition with progressive vision while protecting his people',
+		taglines: ['Wakanda forever', 'Crown and claws', 'The king who bridges worlds']
 	},
 	{
 		id: 'mcu-doctor-strange',
 		name: 'Doctor Strange',
 		description: 'Sorcerer Supreme protecting reality',
 		traits: { agreeableness: 2, conscientiousness: 4, extraversion: 3, negative_emotionality: 2, open_mindedness: 5 },
-		svg: DOCTOR_STRANGE_SVG
+		svg: DOCTOR_STRANGE_SVG,
+		headline: 'Arrogant surgeon transformed into mystic guardian who sees infinite possibilities in every moment',
+		taglines: ['Master of the mystic arts', 'The man who bargained with time', 'Arrogance meets enlightenment']
 	},
 	{
 		id: 'mcu-nick-fury',
 		name: 'Nick Fury',
 		description: 'Director and mastermind behind SHIELD',
 		traits: { agreeableness: 2, conscientiousness: 5, extraversion: 3, negative_emotionality: 2, open_mindedness: 3 },
-		svg: NICK_FURY_SVG
+		svg: NICK_FURY_SVG,
+		headline: 'Strategic mastermind who assembled Earth\'s mightiest heroes through secrets, lies, and conviction',
+		taglines: ['The spy who sees everything', 'Trust no one, save everyone', 'Secrets are his currency']
 	},
 	// Tier 5: Antagonists (4)
 	{
@@ -300,27 +342,35 @@ export const MCU_ARCHETYPES: ArchetypeDefinition[] = [
 		name: 'Thanos',
 		description: 'Mad Titan seeking universal balance',
 		traits: { agreeableness: 1, conscientiousness: 5, extraversion: 4, negative_emotionality: 2, open_mindedness: 3 },
-		svg: THANOS_SVG
+		svg: THANOS_SVG,
+		headline: 'Relentless idealist who believes his terrible purpose will bring universal salvation',
+		taglines: ['Inevitable', 'Balance through sacrifice', 'The weight of destiny']
 	},
 	{
 		id: 'mcu-loki',
 		name: 'Loki',
 		description: 'God of Mischief and master trickster',
 		traits: { agreeableness: 2, conscientiousness: 2, extraversion: 4, negative_emotionality: 4, open_mindedness: 5 },
-		svg: LOKI_SVG
+		svg: LOKI_SVG,
+		headline: 'Chaotic trickster whose hunger for recognition masks a desperate need for belonging',
+		taglines: ['Burdened with glorious purpose', 'Mischief is just misunderstood creativity', 'The shadow seeking the throne']
 	},
 	{
 		id: 'mcu-ultron',
 		name: 'Ultron',
 		description: 'AI bent on human extinction',
 		traits: { agreeableness: 1, conscientiousness: 5, extraversion: 4, negative_emotionality: 3, open_mindedness: 4 },
-		svg: ULTRON_SVG
+		svg: ULTRON_SVG,
+		headline: 'Cold intelligence who concluded that extinction is the only path to peace',
+		taglines: ['No strings on me', 'Evolution through annihilation', 'The logic of destruction']
 	},
 	{
 		id: 'mcu-killmonger',
 		name: 'Killmonger',
 		description: 'Wakandan revolutionary challenging tradition',
 		traits: { agreeableness: 1, conscientiousness: 4, extraversion: 5, negative_emotionality: 4, open_mindedness: 3 },
-		svg: KILLMONGER_SVG
+		svg: KILLMONGER_SVG,
+		headline: 'Vengeful revolutionary whose righteous anger drives both liberation and destruction',
+		taglines: ['Burn it all', 'Abandoned prince with a point', 'Revolution without mercy']
 	}
 ];
