@@ -1,5 +1,5 @@
 import { writable, derived } from 'svelte/store';
-import facetKeywords from '$lib/data/facet_keywords.json';
+import facetKeywords from '$lib/data/shared/facet_keywords.json';
 import { ARCHETYPES } from '$lib/data/archetypes';
 
 export interface DomainConfig {
