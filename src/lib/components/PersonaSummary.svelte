@@ -6,12 +6,14 @@
 	import personalitySummariesV1 from '$lib/data/personality_summaries.json';
 	import personalitySummariesV2 from '$lib/data/personality_summaries_v2.json';
 	import systemPrompts from '$lib/data/system_prompts.json';
+	import { sfx } from '$lib/stores/sounds';
 
 	// Flip state for prompt panel
 	let isFlipped = $state(false);
 
 	function toggleFlip() {
 		isFlipped = !isFlipped;
+		sfx.cardFlip();
 	}
 
 	// Emoji gradient picker state
@@ -25,8 +27,9 @@
 			return;
 		}
 
-		// Trigger bounce animation
+		// Trigger bounce animation and sound
 		bounceIndex = index;
+		sfx.emojiPop();
 		setTimeout(() => {
 			bounceIndex = null;
 		}, 200);
@@ -37,6 +40,7 @@
 
 	function handleGradientSelect(domainId: string, score: number) {
 		setDomainScore(domainId, score);
+		sfx.sliderTick();
 		// Close picker after selection
 		setTimeout(() => {
 			expandedDomainIndex = null;

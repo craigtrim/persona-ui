@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getFacetKeywords } from '$lib/stores/personality';
+	import { sfx } from '$lib/stores/sounds';
 
 	interface Props {
 		domain: string;
@@ -30,9 +31,18 @@
 	// Format facet name for display
 	let facetLabel = $derived(facet.replace(/_/g, ' '));
 
+	// Track previous score to detect changes
+	let prevScore = score;
+
 	function handleInput(e: Event) {
 		const target = e.target as HTMLInputElement;
-		onchange(parseInt(target.value, 10));
+		const newValue = parseInt(target.value, 10);
+		// Only play sound if score actually changed
+		if (newValue !== prevScore) {
+			sfx.facetTap();
+			prevScore = newValue;
+		}
+		onchange(newValue);
 	}
 </script>
 

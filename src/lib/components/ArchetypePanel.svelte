@@ -10,6 +10,7 @@
 		calculateArchetypeDistance,
 		type ArchetypeDefinition
 	} from '$lib/data/archetypes';
+	import { sfx } from '$lib/stores/sounds';
 
 	// Flag to freeze the list order when user clicks an archetype directly
 	let freezeListOrder = $state(false);
@@ -53,6 +54,7 @@
 	// Handle archetype selection - set sliders to archetype's trait values
 	function selectArchetype(archetype: ArchetypeDefinition) {
 		selectedArchetypeId = archetype.id;
+		sfx.archetypeSelect();
 
 		// Record click time so we know these slider changes are from a click, not manual adjustment
 		lastClickTime = Date.now();
@@ -90,6 +92,28 @@
 		if (freezeListOrder && Date.now() - lastClickTime > 100) {
 			unfreezeList();
 		}
+	});
+
+	// Track previous match quality to detect when user hits 100%
+	let prevMatchQuality = $state(0);
+	let perfectMatchPlayed = $state(false);
+
+	$effect(() => {
+		const currentQuality = bestMatch.matchQuality;
+
+		// Play easter egg sound when hitting exactly 100% for the first time
+		// (not on initial load or archetype click, only on manual slider adjustment)
+		if (currentQuality === 100 && prevMatchQuality < 100 && !perfectMatchPlayed && Date.now() - lastClickTime > 100) {
+			sfx.perfectMatch();
+			perfectMatchPlayed = true;
+		}
+
+		// Reset the flag when quality drops below 100
+		if (currentQuality < 100) {
+			perfectMatchPlayed = false;
+		}
+
+		prevMatchQuality = currentQuality;
 	});
 
 	// Calculate opacity based on match quality (higher quality = more opaque)
@@ -156,6 +180,7 @@
 	// Handle Cipher selection - pick a random cipher profile
 	function selectCipher() {
 		selectedArchetypeId = CIPHER.id;
+		sfx.archetypeSelect();
 
 		// Record click time
 		lastClickTime = Date.now();

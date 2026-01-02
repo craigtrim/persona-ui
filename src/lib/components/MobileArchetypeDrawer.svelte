@@ -10,6 +10,7 @@
 		calculateArchetypeDistance,
 		type ArchetypeDefinition
 	} from '$lib/data/archetypes';
+	import { sfx } from '$lib/stores/sounds';
 
 	// Drawer state
 	let isOpen = $state(false);
@@ -36,6 +37,7 @@
 	// Handle archetype selection
 	function selectArchetype(archetype: ArchetypeDefinition) {
 		selectedArchetypeId = archetype.id;
+		sfx.archetypeSelect();
 
 		// Set each domain to the archetype's target value
 		for (const [domain, value] of Object.entries(archetype.traits)) {
@@ -77,6 +79,7 @@
 
 	function selectCipher() {
 		selectedArchetypeId = CIPHER.id;
+		sfx.archetypeSelect();
 		const profile = generateValidCipherProfile();
 
 		for (const [domain, value] of Object.entries(profile)) {

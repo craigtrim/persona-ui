@@ -2,6 +2,7 @@
 	import FacetBar from './FacetBar.svelte';
 	import type { DomainConfig } from '$lib/stores/personality';
 	import domainTexts from '$lib/data/domain_texts.json';
+	import { sfx, preloadSounds } from '$lib/stores/sounds';
 
 	interface Props {
 		config: DomainConfig;
@@ -18,6 +19,7 @@
 
 	function toggleFlip() {
 		isFlipped = !isFlipped;
+		sfx.cardFlip();
 	}
 
 	// For display, round to nearest integer for emoji lookup
@@ -40,9 +42,20 @@
 		return labels[rounded] || 'Balanced';
 	});
 
+	// Track previous score to detect changes
+	let prevScore = score;
+
 	function handleInput(e: Event) {
 		const target = e.target as HTMLInputElement;
-		onDomainChange(parseFloat(target.value));
+		const newValue = parseFloat(target.value);
+		// Only play sound if score actually changed
+		if (newValue !== prevScore) {
+			sfx.sliderTick();
+			prevScore = newValue;
+		}
+		onDomainChange(newValue);
+		// Preload sounds on first interaction
+		preloadSounds();
 	}
 
 	// Calculate thumb position percentage for custom positioning
