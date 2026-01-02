@@ -3,10 +3,50 @@
 	// Both scoreString and scoreStringDisplay now use the same order: A,C,E,N,O
 	// If lookups fail, you'll see fallback text like "Balanced approach to most situations"
 	import { emojiSummary, scoreString, scoreStringDisplay, DOMAINS, domainScores, setDomainScore, selectedArchetype } from '$lib/stores/personality';
-	import summariesTagline from '$lib/data/shared/summaries_tagline.json';
-	import summariesHeadline from '$lib/data/shared/summaries_headline.json';
+	import { archetypeSetId } from '$lib/stores/archetypeSet';
+	// Shared/generic data (fallback)
+	import sharedTagline from '$lib/data/shared/summaries_tagline.json';
+	import sharedHeadline from '$lib/data/shared/summaries_headline.json';
 	import personaPrompts from '$lib/data/shared/persona_prompts.json';
+	// Archetype-specific data
+	import greenemberTagline from '$lib/data/greenember/summaries_tagline.json';
+	import greenemberHeadline from '$lib/data/greenember/summaries_headline.json';
+	import greekmythologyTagline from '$lib/data/greekmythology/summaries_tagline.json';
+	import greekmythologyHeadline from '$lib/data/greekmythology/summaries_headline.json';
+	import romanmythologyTagline from '$lib/data/romanmythology/summaries_tagline.json';
+	import romanmythologyHeadline from '$lib/data/romanmythology/summaries_headline.json';
+	import norsemythologyTagline from '$lib/data/norsemythology/summaries_tagline.json';
+	import norsemythologyHeadline from '$lib/data/norsemythology/summaries_headline.json';
+	import mcuTagline from '$lib/data/mcu/summaries_tagline.json';
+	import mcuHeadline from '$lib/data/mcu/summaries_headline.json';
+	import starwarsTagline from '$lib/data/starwars/summaries_tagline.json';
+	import starwarsHeadline from '$lib/data/starwars/summaries_headline.json';
 	import { sfx } from '$lib/stores/sounds';
+
+	// Map archetype set IDs to their JSON data
+	const taglinesBySet: Record<string, Record<string, string[]>> = {
+		'generic': sharedTagline,
+		'green-ember': greenemberTagline,
+		'greek-mythology': greekmythologyTagline,
+		'roman-mythology': romanmythologyTagline,
+		'norse-mythology': norsemythologyTagline,
+		'mcu': mcuTagline,
+		'star-wars': starwarsTagline
+	};
+
+	const headlinesBySet: Record<string, Record<string, string[]>> = {
+		'generic': sharedHeadline,
+		'green-ember': greenemberHeadline,
+		'greek-mythology': greekmythologyHeadline,
+		'roman-mythology': romanmythologyHeadline,
+		'norse-mythology': norsemythologyHeadline,
+		'mcu': mcuHeadline,
+		'star-wars': starwarsHeadline
+	};
+
+	// Get the correct JSON data for current archetype set
+	let summariesTagline = $derived(taglinesBySet[$archetypeSetId] || sharedTagline);
+	let summariesHeadline = $derived(headlinesBySet[$archetypeSetId] || sharedHeadline);
 
 	// Flip state for prompt panel
 	let isFlipped = $state(false);
