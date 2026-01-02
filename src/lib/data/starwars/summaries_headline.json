@@ -1,125 +1,125 @@
 {
-  "A5,C4,E3,N3,O4": [
+  "Luke Skywalker": [
     "Luke Skywalker carries hope across the galaxy, balancing compassion with growing wisdom",
     "Luke Skywalker sees the good in others even when darkness surrounds them",
     "Luke Skywalker transforms from farm boy to legend through faith in redemption"
   ],
-  "A2,C2,E5,N3,O4": [
+  "Han Solo": [
     "Han Solo talks fast and flies faster, hiding a good heart under cynical swagger",
     "Han Solo never met a situation he couldn't bluff his way through",
     "Han Solo pretends not to care right up until he saves everyone"
   ],
-  "A4,C5,E4,N2,O3": [
+  "Princess Leia": [
     "Princess Leia commands respect through unwavering dedication to the cause",
     "Princess Leia leads the Rebellion with tactical brilliance and iron will",
     "Princess Leia refuses to break no matter what the Empire throws at her"
   ],
-  "A4,C3,E3,N3,O2": [
+  "Chewbacca": [
     "Chewbacca stands loyal beside his friends through every impossible mission",
     "Chewbacca lets actions speak louder than words in defense of those he loves",
     "Chewbacca brings strength and steadfast loyalty to every fight"
   ],
-  "A4,C5,E2,N5,O2": [
+  "C-3PO": [
     "C-3PO calculates the odds while worrying about absolutely everything",
     "C-3PO provides protocol expertise along with constant anxious commentary",
     "C-3PO somehow survives every adventure despite predicting certain doom"
   ],
-  "A4,C4,E4,N1,O4": [
+  "R2-D2": [
     "R2-D2 saves the day with resourceful problem solving and unwavering courage",
     "R2-D2 carries the mission forward no matter how dire the circumstances",
     "R2-D2 proves that small heroes make the biggest difference"
   ],
-  "A1,C5,E3,N4,O2": [
+  "Darth Vader": [
     "Darth Vader enforces the Emperor's will with terrifying precision",
     "Darth Vader buries his former self beneath layers of duty and rage",
     "Darth Vader commands through fear while a flicker of conflict remains"
   ],
-  "A1,C5,E4,N2,O4": [
+  "Emperor Palpatine": [
     "Emperor Palpatine manipulates the galaxy with patient, calculated malice",
     "Emperor Palpatine plays the long game in pursuit of absolute power",
     "Emperor Palpatine sees every being as a piece on his galactic chessboard"
   ],
-  "A1,C4,E2,N2,O2": [
+  "Boba Fett": [
     "Boba Fett completes the job with cold efficiency and no questions asked",
     "Boba Fett tracks targets across the galaxy with relentless precision",
     "Boba Fett lets his reputation speak for itself in silence"
   ],
-  "A1,C5,E3,N1,O2": [
+  "Grand Moff Tarkin": [
     "Grand Moff Tarkin rules through fear and calculated ruthlessness",
     "Grand Moff Tarkin sees order as the only acceptable state of the galaxy",
     "Grand Moff Tarkin eliminates problems with cold administrative precision"
   ],
-  "A3,C2,E5,N3,O4": [
+  "Lando Calrissian": [
     "Lando Calrissian charms his way through deals both good and questionable",
     "Lando Calrissian always has an angle but finds his conscience eventually",
     "Lando Calrissian proves smooth talk can coexist with genuine heroism"
   ],
-  "A5,C5,E3,N2,O4": [
+  "Obi-Wan Kenobi": [
     "Obi-Wan Kenobi guides others with patience, wisdom, and quiet strength",
     "Obi-Wan Kenobi holds to the Jedi path even when it costs him everything",
     "Obi-Wan Kenobi teaches through example and never stops believing"
   ],
-  "A3,C2,E4,N5,O4": [
+  "Anakin Skywalker": [
     "Anakin Skywalker burns with passion that proves both gift and curse",
     "Anakin Skywalker reaches for greatness while struggling with his demons",
     "Anakin Skywalker loves too fiercely and fears loss too deeply"
   ],
-  "A5,C5,E2,N1,O5": [
+  "Yoda": [
     "Yoda embodies centuries of wisdom wrapped in unassuming form",
     "Yoda sees the Force in all things and teaches through riddles and patience",
     "Yoda proves that size matters not when the spirit is strong"
   ],
-  "A3,C5,E3,N2,O3": [
+  "Mace Windu": [
     "Mace Windu upholds the Jedi code with uncompromising discipline",
     "Mace Windu brings controlled power to defense of the Republic",
     "Mace Windu sees clearly but struggles with the Council's limitations"
   ],
-  "A4,C3,E3,N2,O5": [
+  "Qui-Gon Jinn": [
     "Qui-Gon Jinn follows the living Force even when it defies the Council",
     "Qui-Gon Jinn sees potential where others see only problems",
     "Qui-Gon Jinn walks his own path with quiet conviction"
   ],
-  "A1,C4,E3,N3,O2": [
+  "Darth Maul": [
     "Darth Maul serves as a weapon forged in hatred and trained in silence",
     "Darth Maul channels rage into deadly precision",
     "Darth Maul exists for one purpose and pursues it relentlessly"
   ],
-  "A2,C5,E3,N2,O4": [
+  "Count Dooku": [
     "Count Dooku brings aristocratic refinement to the path of darkness",
     "Count Dooku left the Jedi for ideological reasons that still haunt him",
     "Count Dooku wields elegance and power in equal measure"
   ],
-  "A2,C4,E3,N2,O2": [
+  "Jango Fett": [
     "Jango Fett takes contracts without sentiment and completes them without fail",
     "Jango Fett built a legacy through skill and ruthless professionalism",
     "Jango Fett trusts only himself and his equipment"
   ],
-  "A4,C5,E4,N2,O3": [
+  "Padmé Amidala": [
     "Padmé Amidala fights for democracy with eloquence and unwavering resolve",
     "Padmé Amidala leads from the Senate floor with dignity and courage",
     "Padmé Amidala believes in the Republic even as it crumbles around her"
   ],
-  "A3,C4,E3,N3,O3": [
+  "Cassian Andor": [
     "Cassian Andor does what the Rebellion needs, carrying the weight of hard choices",
     "Cassian Andor serves the cause with pragmatic dedication and hidden doubts",
     "Cassian Andor learned long ago that hope requires sacrifice"
   ],
-  "A5,C5,E3,N3,O3": [
+  "Mon Mothma": [
     "Mon Mothma builds the Rebellion through diplomacy and quiet determination",
     "Mon Mothma holds the Alliance together when hope seems lost",
     "Mon Mothma speaks softly while orchestrating galactic change"
   ],
-  "A1,C3,E3,N2,O2": [
+  "Jabba the Hutt": [
     "Jabba the Hutt rules his criminal empire with greedy satisfaction",
     "Jabba the Hutt collects debts and grudges with equal enthusiasm",
     "Jabba the Hutt proves that power can be bought and sold"
   ],
-  "A4,C4,E3,N3,O2": [
+  "Admiral Ackbar": [
     "Admiral Ackbar leads the fleet with tactical expertise and steady command",
     "Admiral Ackbar reads battle situations with experienced clarity",
     "Admiral Ackbar serves the cause with unwavering military discipline"
   ],
-  "A4,C2,E4,N3,O3": [
+  "Ewok": [
     "Ewoks prove that courage comes in small packages",
     "Ewoks defend their home with resourceful determination",
     "Ewoks turn primitive weapons into surprisingly effective resistance"

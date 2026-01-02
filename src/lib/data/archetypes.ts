@@ -739,140 +739,180 @@ export const ARCHETYPES: ArchetypeDefinition[] = [
 		name: 'The Architect',
 		description: 'Methodical visionary, works alone on complex systems',
 		traits: { agreeableness: L, conscientiousness: H, extraversion: L, negative_emotionality: L, open_mindedness: H },
-		svg: ARCHITECT_SVG
+		svg: ARCHITECT_SVG,
+		headline: 'The Architect builds intricate systems in solitude, where precision meets vision in methodical creation',
+		taglines: ['Methodical visionary', 'Systems thinker in solitude', 'Precision meets innovation']
 	},
 	{
 		id: 'commander',
 		name: 'The Commander',
 		description: 'Decisive leader, results over feelings',
 		traits: { agreeableness: L, conscientiousness: H, extraversion: H, negative_emotionality: L, open_mindedness: M },
-		svg: COMMANDER_SVG
+		svg: COMMANDER_SVG,
+		headline: 'The Commander leads with decisive authority, cutting through chaos to deliver results that speak for themselves',
+		taglines: ['Decisive leadership', 'Results over feelings', 'Authority that delivers']
 	},
 	{
 		id: 'mediator',
 		name: 'The Mediator',
 		description: 'Empathetic idealist, conflict-averse dreamer',
 		traits: { agreeableness: H, conscientiousness: M, extraversion: L, negative_emotionality: M, open_mindedness: H },
-		svg: MEDIATOR_SVG
+		svg: MEDIATOR_SVG,
+		headline: 'The Mediator navigates between worlds with empathetic grace, finding harmony where others see only conflict',
+		taglines: ['Empathetic idealist', 'Harmony seeker', 'Peace through understanding']
 	},
 	{
 		id: 'performer',
 		name: 'The Performer',
 		description: 'Creative extrovert, spontaneous entertainer',
 		traits: { agreeableness: M, conscientiousness: L, extraversion: H, negative_emotionality: M, open_mindedness: H },
-		svg: PERFORMER_SVG
+		svg: PERFORMER_SVG,
+		headline: 'The Performer lights up every room with creative energy that cannot be contained or predicted',
+		taglines: ['Spontaneous entertainer', 'Creative energy unleashed', 'Life of the party']
 	},
 	{
 		id: 'analyst',
 		name: 'The Analyst',
 		description: 'Systematic, traditional, solitary problem-solver',
 		traits: { agreeableness: M, conscientiousness: H, extraversion: L, negative_emotionality: L, open_mindedness: L },
-		svg: ANALYST_SVG
+		svg: ANALYST_SVG,
+		headline: 'The Analyst dissects complexity with systematic precision, finding patterns others overlook',
+		taglines: ['Systematic precision', 'Patterns in the chaos', 'Solitary problem-solver']
 	},
 	{
 		id: 'caregiver',
 		name: 'The Caregiver',
 		description: 'Stable, reliable supporter of others',
 		traits: { agreeableness: H, conscientiousness: H, extraversion: M, negative_emotionality: L, open_mindedness: M },
-		svg: CAREGIVER_SVG
+		svg: CAREGIVER_SVG,
+		headline: 'The Caregiver offers steady support that others rely on, building foundations of trust through consistent action',
+		taglines: ['Steady supporter', 'Reliable foundation', 'Trust through action']
 	},
 	{
 		id: 'adventurer',
 		name: 'The Adventurer',
 		description: 'Thrill-seeker, impulsive explorer',
 		traits: { agreeableness: L, conscientiousness: L, extraversion: H, negative_emotionality: L, open_mindedness: H },
-		svg: ADVENTURER_SVG
+		svg: ADVENTURER_SVG,
+		headline: 'The Adventurer chases horizons with fearless energy, finding life in the pursuit of the unknown',
+		taglines: ['Fearless explorer', 'Horizons await', 'Living on the edge']
 	},
 	{
 		id: 'stoic',
 		name: 'The Stoic',
 		description: 'Calm, disciplined, emotionally reserved',
 		traits: { agreeableness: M, conscientiousness: H, extraversion: L, negative_emotionality: L, open_mindedness: L },
-		svg: STOIC_SVG
+		svg: STOIC_SVG,
+		headline: 'The Stoic stands unmoved by chaos, finding strength in discipline and clarity in calm',
+		taglines: ['Unmoved by chaos', 'Discipline is freedom', 'Calm clarity']
 	},
 	{
 		id: 'diplomat',
 		name: 'The Diplomat',
 		description: 'Charismatic peacemaker, organized networker',
 		traits: { agreeableness: H, conscientiousness: H, extraversion: H, negative_emotionality: L, open_mindedness: M },
-		svg: DIPLOMAT_SVG
+		svg: DIPLOMAT_SVG,
+		headline: 'The Diplomat weaves connections between people with charismatic ease, building bridges where walls once stood',
+		taglines: ['Bridge builder', 'Charismatic connector', 'Peace through presence']
 	},
 	{
 		id: 'rebel',
 		name: 'The Rebel',
 		description: 'Nonconformist challenger, questions authority',
 		traits: { agreeableness: L, conscientiousness: L, extraversion: H, negative_emotionality: M, open_mindedness: H },
-		svg: REBEL_SVG
+		svg: REBEL_SVG,
+		headline: 'The Rebel challenges every convention, finding freedom in the spaces between accepted truths',
+		taglines: ['Question everything', 'Rules are suggestions', 'Freedom through defiance']
 	},
 	{
 		id: 'scholar',
 		name: 'The Scholar',
 		description: 'Curious intellectual, systematic learner',
 		traits: { agreeableness: M, conscientiousness: H, extraversion: L, negative_emotionality: M, open_mindedness: H },
-		svg: SCHOLAR_SVG
+		svg: SCHOLAR_SVG,
+		headline: 'The Scholar pursues knowledge with methodical passion, building understanding one discovery at a time',
+		taglines: ['Knowledge seeker', 'Methodical curiosity', 'Learning never ends']
 	},
 	{
 		id: 'healer',
 		name: 'The Healer',
 		description: 'Deeply empathetic, emotionally attuned helper',
 		traits: { agreeableness: H, conscientiousness: M, extraversion: L, negative_emotionality: H, open_mindedness: H },
-		svg: HEALER_SVG
+		svg: HEALER_SVG,
+		headline: 'The Healer senses wounds others cannot see and offers presence that mends what words cannot reach',
+		taglines: ['Wounds unseen, healed', 'Presence that mends', 'Empathy in action']
 	},
 	{
 		id: 'entrepreneur',
 		name: 'The Entrepreneur',
 		description: 'Bold risk-taker, opportunistic innovator',
 		traits: { agreeableness: L, conscientiousness: M, extraversion: H, negative_emotionality: L, open_mindedness: H },
-		svg: ENTREPRENEUR_SVG
+		svg: ENTREPRENEUR_SVG,
+		headline: 'The Entrepreneur spots opportunity where others see only risk, turning bold vision into tangible reality',
+		taglines: ['Opportunity hunter', 'Bold vision, real results', 'Risk is the price of progress']
 	},
 	{
 		id: 'sentinel',
 		name: 'The Sentinel',
 		description: 'Dutiful protector, tradition-keeper',
 		traits: { agreeableness: H, conscientiousness: H, extraversion: L, negative_emotionality: M, open_mindedness: L },
-		svg: SENTINEL_SVG
+		svg: SENTINEL_SVG,
+		headline: 'The Sentinel guards what matters with quiet dedication, keeping watch when others have moved on',
+		taglines: ['Quiet guardian', 'Duty above all', 'Tradition preserved']
 	},
 	{
 		id: 'maverick',
 		name: 'The Maverick',
 		description: 'Independent thinker, creative lone wolf',
 		traits: { agreeableness: L, conscientiousness: L, extraversion: M, negative_emotionality: L, open_mindedness: H },
-		svg: MAVERICK_SVG
+		svg: MAVERICK_SVG,
+		headline: 'The Maverick walks paths of their own making, finding answers in places no one thought to look',
+		taglines: ['Path less traveled', 'Creative independence', 'Lone wolf wisdom']
 	},
 	{
 		id: 'host',
 		name: 'The Host',
 		description: 'Warm social organizer, brings people together',
 		traits: { agreeableness: H, conscientiousness: M, extraversion: H, negative_emotionality: L, open_mindedness: M },
-		svg: HOST_SVG
+		svg: HOST_SVG,
+		headline: 'The Host creates spaces where everyone belongs, turning gatherings into memories worth keeping',
+		taglines: ['Everyone belongs here', 'Gatherings become memories', 'Warmth that welcomes']
 	},
 	{
 		id: 'critic',
 		name: 'The Critic',
 		description: 'Sharp-eyed perfectionist, quality-focused',
 		traits: { agreeableness: L, conscientiousness: H, extraversion: L, negative_emotionality: M, open_mindedness: M },
-		svg: CRITIC_SVG
+		svg: CRITIC_SVG,
+		headline: 'The Critic sees flaws others miss and holds standards others abandon, excellence through discernment',
+		taglines: ['Standards that matter', 'Excellence through discernment', 'Details define quality']
 	},
 	{
 		id: 'dreamer',
 		name: 'The Dreamer',
 		description: 'Imaginative introvert, lives in ideas',
 		traits: { agreeableness: M, conscientiousness: L, extraversion: L, negative_emotionality: M, open_mindedness: H },
-		svg: DREAMER_SVG
+		svg: DREAMER_SVG,
+		headline: 'The Dreamer inhabits worlds of imagination, finding truths in visions that logic cannot reach',
+		taglines: ['Imagination unbound', 'Visions become reality', 'Beyond logic lies truth']
 	},
 	{
 		id: 'warrior',
 		name: 'The Warrior',
 		description: 'Competitive achiever, direct and driven',
 		traits: { agreeableness: L, conscientiousness: H, extraversion: H, negative_emotionality: L, open_mindedness: L },
-		svg: WARRIOR_SVG
+		svg: WARRIOR_SVG,
+		headline: 'The Warrior meets every challenge head-on, driven by competitive fire that never dims',
+		taglines: ['Victory through will', 'Challenges met, conquered', 'Competitive fire']
 	},
 	{
 		id: 'sage',
 		name: 'The Sage',
 		description: 'Wise counselor, thoughtful and open-minded',
 		traits: { agreeableness: H, conscientiousness: M, extraversion: L, negative_emotionality: L, open_mindedness: H },
-		svg: SAGE_SVG
+		svg: SAGE_SVG,
+		headline: 'The Sage offers wisdom earned through reflection, guiding others with patient understanding',
+		taglines: ['Wisdom through reflection', 'Patient understanding', 'Guidance freely given']
 	}
 ];
 

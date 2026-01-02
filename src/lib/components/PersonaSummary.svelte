@@ -113,30 +113,50 @@
 		return text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]/gu, '').trim();
 	}
 
+	// Helper for case-insensitive JSON lookup by archetype name
+	function lookupByName<T>(data: Record<string, T>, name: string | undefined): T | undefined {
+		if (!name) return undefined;
+		const lowerName = name.toLowerCase();
+		for (const [key, value] of Object.entries(data)) {
+			if (key.toLowerCase() === lowerName) {
+				return value;
+			}
+		}
+		return undefined;
+	}
+
 	// Get tagline summaries (with emojis stripped)
-	// Priority: archetype.taglines > shared JSON > fallback
+	// Priority: archetype.taglines > JSON lookup by name > fallback
 	let taglineSummaries = $derived.by(() => {
 		// Check if selected archetype has custom taglines
 		if ($selectedArchetype?.taglines && $selectedArchetype.taglines.length > 0) {
 			return $selectedArchetype.taglines.map(stripEmojis);
 		}
-		// Fall back to shared JSON
-		return ((summariesTagline as Record<string, string[]>)[$scoreString] || fallbackV1)
-			.map(stripEmojis);
+		// Look up by archetype name (case-insensitive)
+		const byName = lookupByName(summariesTagline as Record<string, string[]>, $selectedArchetype?.name);
+		if (byName) {
+			return byName.map(stripEmojis);
+		}
+		// Final fallback
+		return fallbackV1.map(stripEmojis);
 	});
 
 	// Get headline summary (stable - pick longest one)
-	// Priority: archetype.headline > shared JSON > fallback
+	// Priority: archetype.headline > JSON lookup by name > fallback
 	let headlineSummary = $derived.by(() => {
 		// Check if selected archetype has a custom headline
 		if ($selectedArchetype?.headline) {
 			return $selectedArchetype.headline;
 		}
-		// Fall back to shared JSON
-		const summaries = (summariesHeadline as Record<string, string[]>)[$scoreString] || [fallbackV2];
-		return summaries.reduce((longest, current) =>
-			current.length > longest.length ? current : longest
-		);
+		// Look up by archetype name (case-insensitive)
+		const byName = lookupByName(summariesHeadline as Record<string, string[]>, $selectedArchetype?.name);
+		if (byName && byName.length > 0) {
+			return byName.reduce((longest, current) =>
+				current.length > longest.length ? current : longest
+			);
+		}
+		// Final fallback
+		return fallbackV2;
 	});
 
 	// Tagline rotates randomly, biased toward shorter texts (to complement longer headline)

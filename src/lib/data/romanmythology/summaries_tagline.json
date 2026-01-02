@@ -1,165 +1,235 @@
 {
-  "A2,C4,E4,N2,O3": [
+  "Jupiter": [
     "King of gods, master of storms",
     "Authority without apology",
     "Thunder serves the throne"
   ],
-  "A2,C4,E4,N3,O2": [
+  "Juno": [
     "Queen with ancient grievances",
     "Marriage guardian, fierce protector",
     "Loyalty demands everything"
   ],
-  "A2,C3,E4,N4,O3": [
+  "Neptune": [
     "Sea lord, earth shaker",
     "Tempest within, tempest without",
     "Depths hide fury"
   ],
-  "A4,C4,E3,N3,O3": [
+  "Ceres": [
     "Mother of harvest",
     "Seasons bend to grief",
     "Nurture and loss intertwined"
   ],
-  "A3,C4,E3,N2,O4": [
+  "Minerva": [
     "Wisdom in action",
     "Strategy over strength",
     "Clear sight, steady hand"
   ],
-  "A3,C4,E4,N2,O4": [
+  "Apollo": [
     "Light, music, truth",
     "Radiant in all things",
     "Excellence pursued relentlessly"
   ],
-  "A3,C4,E2,N2,O4": [
+  "Diana": [
     "Wild huntress, moonlit paths",
     "Freedom fiercely guarded",
     "Untamed and unbowed"
   ],
-  "A3,C4,E4,N2,O2": [
+  "Mars": [
     "Discipline in battle",
     "Victory through action",
     "Mars favors the bold"
   ],
-  "A4,C3,E4,N3,O4": [
+  "Venus": [
     "Love reshapes worlds",
     "Beauty as power",
     "Passion without limits"
   ],
-  "A3,C4,E2,N4,O4": [
+  "Vulcan": [
     "Forge master, reject no more",
     "Creation from pain",
     "Fire transforms all"
   ],
-  "A4,C2,E4,N3,O4": [
+  "Mercury": [
+    "Swift messenger, swift mind",
+    "Boundaries meant for crossing",
+    "Speed opens doors"
+  ],
+  "Bacchus": [
     "Wine and liberation",
     "Ecstasy or ruin",
     "Release through surrender"
   ],
-  "A3,C4,E2,N2,O2": [
+  "Pluto": [
     "Lord of the silent realm",
     "Patient keeper of endings",
     "Wealth beneath the earth"
   ],
-  "A4,C3,E3,N3,O4": [
+  "Proserpina": [
     "Queen of two worlds",
     "Spring and shadow balanced",
     "Transformation accepted"
   ],
-  "A4,C4,E2,N2,O2": [
+  "Vesta": [
     "Sacred flame keeper",
     "Home made holy",
     "Quiet essential service"
   ],
-  "A4,C3,E4,N2,O3": [
+  "Cupid": [
+    "Arrows that never miss",
+    "Love without warning",
+    "Hearts change in moments"
+  ],
+  "Saturn": [
     "Golden age remembered",
     "Time's patient teacher",
     "Even gods can fall"
   ],
-  "A2,C3,E4,N4,O2": [
+  "Janus": [
+    "Two faces, one wisdom",
+    "Past and future seen",
+    "Thresholds hold power"
+  ],
+  "Quirinus": [
+    "Divine citizen protector",
+    "Warrior becomes guardian",
+    "Rome's spirit embodied"
+  ],
+  "Bellona": [
     "War's fierce handmaiden",
     "Blood and glory intertwined",
     "Battle demands all"
   ],
-  "A3,C2,E4,N3,O4": [
+  "Faunus": [
     "Wild places call",
-    "Fortune's wheel turns",
-    "Chance rules everything"
+    "Nature's joyful voice",
+    "Untamed wisdom"
   ],
-  "A2,C4,E2,N2,O2": [
+  "Fortuna": [
+    "Fortune's wheel turns",
+    "Chance rules everything",
+    "Luck favors the bold"
+  ],
+  "Terminus": [
     "Boundaries hold firm",
     "Immovable guardian",
     "Here and no further"
   ],
-  "A4,C3,E4,N2,O4": [
+  "Flora": [
     "Blossoms follow her steps",
-    "Freedom breathes life",
-    "Beauty awakens hope"
+    "Beauty awakens hope",
+    "Growth where she walks"
   ],
-  "A4,C4,E3,N2,O3": [
+  "Pomona": [
     "Orchards tended with love",
-    "Harmony cultivated daily",
-    "Protection through presence"
+    "Patience brings abundance",
+    "Fruit of devotion"
   ],
-  "A3,C4,E4,N2,O3": [
+  "Sol Invictus": [
     "Light conquers darkness",
-    "Victory crowns the worthy",
-    "Courage in action"
+    "Unconquered sun rises",
+    "Day always returns"
   ],
-  "A4,C3,E2,N3,O4": [
+  "Luna": [
     "Gentle night guide",
     "Silver light reveals truth",
     "Quiet presence endures"
   ],
-  "A3,C3,E2,N2,O3": [
+  "Lares": [
     "Ancestors watching still",
-    "Memory bridges worlds",
-    "The departed remain"
+    "Protection through presence",
+    "Home never truly empty"
   ],
-  "A4,C3,E3,N2,O4": [
+  "Penates": [
+    "Hearth and table blessed",
+    "Domestic peace guarded",
+    "Home's heart protected"
+  ],
+  "Manes": [
+    "Memory bridges worlds",
+    "The departed remain",
+    "Ancestors watching still"
+  ],
+  "Genius": [
     "Divine spark within",
     "Potential unlimited",
     "Creativity flows"
   ],
-  "A2,C2,E3,N4,O3": [
+  "Lemures": [
     "Restless wanderers",
     "Unfinished business lingers",
     "Peace not yet found"
   ],
-  "A2,C2,E2,N4,O2": [
+  "Larvae": [
     "Malice persists beyond",
     "Wrongs remembered eternally",
     "Haunting never ends"
   ],
-  "A4,C4,E2,N2,O3": [
+  "Victoria": [
+    "Victory crowns the worthy",
+    "Triumph requires favor",
+    "Winning is divine"
+  ],
+  "Pax": [
     "Stillness after storms",
     "Peace actively built",
     "Tranquility as strength"
   ],
-  "A4,C4,E3,N2,O2": [
-    "Promises never broken",
-    "Duty above self",
-    "Trust binds all"
+  "Concordia": [
+    "Harmony cultivated daily",
+    "Unity requires effort",
+    "Agreement builds stronger"
   ],
-  "A2,C4,E4,N3,O4": [
+  "Libertas": [
+    "Freedom breathes life",
+    "Liberty defended",
+    "Worth any price"
+  ],
+  "Clementia": [
+    "Mercy as strength",
+    "Forgiveness elevates",
+    "Power tempered is perfected"
+  ],
+  "Fides": [
+    "Promises never broken",
+    "Trust binds all",
+    "Honor outlasts treasures"
+  ],
+  "Pietas": [
+    "Duty above self",
+    "Devotion strengthens bonds",
+    "Loyalty is reward"
+  ],
+  "Virtus": [
+    "Courage in action",
+    "Bravery proven in deed",
+    "Excellence requires sacrifice"
+  ],
+  "Romulus": [
     "Empire from nothing",
     "Will shapes destiny",
     "Founding through fire"
   ],
-  "A3,C3,E4,N3,O4": [
+  "Remus": [
     "Second son's tragedy",
     "Courage without victory",
     "History remembers differently"
   ],
-  "A4,C4,E4,N3,O4": [
+  "Aeneas": [
     "Exile becomes foundation",
     "Duty across oceans",
     "Troy lives through Rome"
   ],
-  "A4,C4,E2,N2,O4": [
+  "Numa Pompilius": [
     "Wisdom tames warriors",
     "Sacred law established",
     "Peace requires courage"
   ],
-  "A4,C4,E2,N3,O3": [
+  "Horatius Cocles": [
+    "One against many",
+    "Bridge defended alone",
+    "Courage saves nations"
+  ],
+  "Lucretia": [
     "Honor demands sacrifice",
     "Virtue reshapes nations",
     "Personal becomes political"
