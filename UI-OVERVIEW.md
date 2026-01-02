@@ -4,7 +4,7 @@ This document is written for future Claude sessions to understand the persona-ui
 
 ## Application Purpose
 
-This is a BFI-2 (Big Five Inventory-2) personality configuration UI. Users adjust 5 personality domains via sliders, and the UI displays corresponding personality summaries and system prompts that can be used to configure AI chatbot personas.
+This is a BFI-2 (Big Five Inventory-2) personality configuration UI. Users adjust 5 personality domains via sliders, and the UI displays corresponding personality summaries and persona prompts that can be used to configure AI chatbot personas.
 
 ## Repository Locations
 
@@ -22,8 +22,8 @@ This is a BFI-2 (Big Five Inventory-2) personality configuration UI. Users adjus
 ├── PersonaSummary
 │   ├── Emoji Header (sticky)
 │   └── Prompt Panel (flippable)
-│       ├── FRONT: v2Summary + v1Summary
-│       └── BACK: System Prompt
+│       ├── FRONT: headlineSummary + taglineSummary
+│       └── BACK: Persona Prompt
 └── DomainSlider (x5)
     ├── FRONT: Domain slider + 3 FacetBar components
     └── BACK: Domain description + keywords
@@ -33,7 +33,7 @@ This is a BFI-2 (Big Five Inventory-2) personality configuration UI. Users adjus
 
 ## 1. EMOJI HEADER
 
-**Component**: `PersonaSummary.svelte` (lines 77-80)
+**Component**: `PersonaSummary.svelte`
 
 **Visual**: A row of 5 emojis at the top of the page, sticky positioned.
 
@@ -41,7 +41,6 @@ This is a BFI-2 (Big Five Inventory-2) personality configuration UI. Users adjus
 
 **How It Works**:
 ```typescript
-// personality.ts lines 206-211
 export const emojiSummary = derived(domainScores, ($scores) => {
     return DOMAINS.map((d) => {
         const score = Math.round($scores[d.id]);
@@ -55,7 +54,7 @@ export const emojiSummary = derived(domainScores, ($scores) => {
 2. `domainScores` derived store averages the 3 facets, rounds to nearest 0.5
 3. `emojiSummary` maps each rounded domain score to an emoji via `emojiGradient`
 
-**Emoji Gradients** (defined in `DOMAINS` array, lines 19-81):
+**Emoji Gradients** (defined in `DOMAINS` array):
 - Agreeableness: 🧊 ❄️ 🌥️ 🌤️ ☀️
 - Conscientiousness: 🌀 😅 ⚖️ 📊 🎯
 - Extraversion: 🌑 🌒 🌓 🌔 🌕
@@ -66,63 +65,63 @@ export const emojiSummary = derived(domainScores, ($scores) => {
 
 ## 2. PROMPT PANEL
 
-**Component**: `PersonaSummary.svelte` (lines 82-113)
+**Component**: `PersonaSummary.svelte`
 
 **Visual**: A flippable card below the emoji header.
 
 ### 2a. FRONT FACE - Personality Summaries
 
 Displays two text blocks:
-- **Top (v2Summary)**: More serious/descriptive, larger font, white text
-- **Bottom (v1Summary)**: Punchier/italic, smaller font, gray text
+- **Top (headlineSummary)**: More serious/descriptive, larger font, white text
+- **Bottom (taglineSummary)**: Punchier/italic, smaller font, gray text
 
 **Data Sources**:
-- `src/lib/data/personality_summaries_v2.json` → v2Summary
-- `src/lib/data/personality_summaries.json` → v1Summary
+- `src/lib/data/shared/summaries_headline.json` → headlineSummary
+- `src/lib/data/shared/summaries_tagline.json` → taglineSummary
 
 **JSON Key Format**: `"A1,C2,E3,N4,O5"` (score string)
 
-**Lookup Logic** (PersonaSummary.svelte lines 32-68):
+**Lookup Logic**:
 
 ```typescript
-// v2Summary: Pick the LONGEST entry from the array (stable, deterministic)
-let v2Summary = $derived.by(() => {
-    const summaries = personalitySummariesV2[$scoreString] || [fallbackV2];
+// headlineSummary: Pick the LONGEST entry from the array (stable, deterministic)
+let headlineSummary = $derived.by(() => {
+    const summaries = summariesHeadline[$scoreString] || [fallbackV2];
     return summaries.reduce((longest, current) =>
         current.length > longest.length ? current : longest
     );
 });
 
-// v1Summary: Pick RANDOM entry, biased toward shorter texts
-// (to complement the longer v2Summary)
-let v1Summary = $derived.by(() => {
+// taglineSummary: Pick RANDOM entry, biased toward shorter texts
+// (to complement the longer headlineSummary)
+let taglineSummary = $derived.by(() => {
     // Weighted random selection favoring shorter texts
     // ... see component for full implementation
 });
 ```
 
 **Fallback Values**:
-- v2: `"Balanced approach to most situations, adapting as needed"`
-- v1: `"A unique blend of traits defying easy categorization"`
+- headline: `"Balanced approach to most situations, adapting as needed"`
+- tagline: `"A unique blend of traits defying easy categorization"`
 
-### 2b. BACK FACE - System Prompt
+### 2b. BACK FACE - Persona Prompt
 
-**Data Source**: `src/lib/data/system_prompts.json`
+**Data Source**: `src/lib/data/shared/persona_prompts.json`
 
 **JSON Key Format**: Same `"A1,C2,E3,N4,O5"` score string
 
-**Lookup** (line 72):
+**Lookup**:
 ```typescript
-let systemPrompt = $derived(
-    systemPrompts[$scoreString] || fallbackPrompt
+let personaPrompt = $derived(
+    personaPrompts[$scoreString] || fallbackPrompt
 );
 ```
 
-**Generation Script**: `persona-api/scripts/consolidate_training_data.py`
+**Generation Script**: `persona-api/scripts/generators/persona_prompts/gen_persona_prompts.py`
 - Reads all `training_data/*.jsonl` files
 - Groups by score combination
 - Picks one random prompt per combo (seeded for reproducibility)
-- Outputs to `persona-ui/src/lib/data/system_prompts.json`
+- Outputs to `persona-ui/src/lib/data/shared/persona_prompts.json`
 
 ---
 
@@ -130,7 +129,7 @@ let systemPrompt = $derived(
 
 **⚠️ CRITICAL**: The order is `A,C,E,N,O` (N before O).
 
-This is defined in `personality.ts` lines 213-236:
+This is defined in `personality.ts`:
 
 ```typescript
 // ⚠️ JSON key order: A, C, E, N, O - DO NOT CHANGE
@@ -144,9 +143,9 @@ const jsonKeyOrder = [
 ```
 
 **Used By**:
-- `personality_summaries.json`
-- `personality_summaries_v2.json`
-- `system_prompts.json`
+- `shared/summaries_tagline.json`
+- `shared/summaries_headline.json`
+- `shared/persona_prompts.json`
 
 If you change this order, lookups will fail and show fallback text.
 
@@ -165,10 +164,10 @@ Each domain panel contains:
 - Main slider: Range 1-5, step 0.5
 - 3 Facet sliders (via `FacetBar.svelte`): Each is 1-5, integer only
 
-**Domain Configuration** (personality.ts lines 19-81):
+**Domain Configuration** (personality.ts):
 
 | Domain | ID | Facets | Inverted? |
-|--------|----|----|-----------|
+|--------|----|--------|-----------|
 | Agreeableness | `agreeableness` | Compassion, Respectfulness, Trust | No |
 | Conscientiousness | `conscientiousness` | Organization, Productiveness, Responsibility | No |
 | Extraversion | `extraversion` | Sociability, Assertiveness, Energy_Level | No |
@@ -182,7 +181,7 @@ Each domain panel contains:
 
 ### 4b. BACK FACE - Domain Description + Keywords
 
-**Data Source**: `src/lib/data/domain_texts.json`
+**Data Source**: `src/lib/data/shared/domain_descriptions.json`
 
 **JSON Key Format**: `"<domain>_<facet1>_<facet2>_<facet3>"`
 - Example: `"extraversion_2_3_4"`
@@ -201,11 +200,11 @@ Each domain panel contains:
 }
 ```
 
-**Lookup** (DomainSlider.svelte lines 52-64):
+**Lookup** (DomainSlider.svelte):
 ```typescript
 let textEntry = $derived.by(() => {
     const key = `${config.id}_${facetScores[0]}_${facetScores[1]}_${facetScores[2]}`;
-    const texts = domainTexts[key];
+    const texts = domainDescriptions[key];
     if (!texts) return null;
 
     const entries = Object.entries(texts);
@@ -216,21 +215,43 @@ let textEntry = $derived.by(() => {
 ```
 
 **Generation Source**: `persona-api/persona_api/data/text/<domain>/<f1>/<f2>/<f3>.json`
-- These files are generated by `gen_domain_text_structure.py`
-- Bundled into `domain_texts.json` for the UI
+- Generated by `generators/domain/gen_domain_descriptions.py`
+- Bundled into `domain_descriptions.json` for the UI
 
 ---
 
 ## 5. DATA FILE SUMMARY
 
+### Data Directory Structure
+
+```
+src/lib/data/
+├── shared/                           # Shared data files (fallback when per-archetype missing)
+│   ├── summaries_tagline.json        # Punchy taglines for prompt panel front
+│   ├── summaries_headline.json       # Serious headlines for prompt panel front
+│   ├── persona_prompts.json          # Persona prompts for prompt panel back
+│   ├── domain_descriptions.json      # Domain descriptions + keywords for domain panel back
+│   ├── keyword_behaviors.json        # Focused behaviors for individual keywords
+│   └── facet_keywords.json           # TF-IDF keywords per facet/score
+├── archetypes.ts                     # Main archetype definitions & registry
+├── norseMythologyArchetypes.ts       # Norse mythology archetype set
+├── starWarsArchetypes.ts             # Star Wars archetype set
+├── mcuArchetypes.ts                  # MCU archetype set
+├── greekMythologyArchetypes.ts       # Greek mythology archetype set
+├── romanMythologyArchetypes.ts       # Roman mythology archetype set
+└── greenEmberArchetypes.ts           # Green Ember archetype set
+```
+
+### File Reference
+
 | File | Purpose | Key Format | Generated By |
 |------|---------|------------|--------------|
-| `system_prompts.json` | Harmonized system prompts for prompt panel back | `A1,C2,E3,N4,O5` | `consolidate_training_data.py` |
-| `personality_summaries.json` | Punchy summaries (v1) for prompt panel front | `A1,C2,E3,N4,O5` | Manual/LLM generated |
-| `personality_summaries_v2.json` | Serious summaries (v2) for prompt panel front | `A1,C2,E3,N4,O5` | Manual/LLM generated |
-| `domain_texts.json` | Domain descriptions + keywords for domain panel back | `domain_f1_f2_f3` | `gen_domain_text_structure.py` |
-| `keyword_prompts.json` | Focused prompts for individual keywords | `domain.keyword` | `gen_keyword_prompts.py` |
-| `facet_keywords.json` | TF-IDF keywords per facet/score | Nested structure | `analyze_facet_keywords.py` |
+| `shared/persona_prompts.json` | Persona prompts for prompt panel back | `A1,C2,E3,N4,O5` | `gen_persona_prompts.py` |
+| `shared/summaries_tagline.json` | Punchy summaries for prompt panel front | `A1,C2,E3,N4,O5` | Manual/LLM generated |
+| `shared/summaries_headline.json` | Serious summaries for prompt panel front | `A1,C2,E3,N4,O5` | Manual/LLM generated |
+| `shared/domain_descriptions.json` | Domain descriptions + keywords for domain panel back | `domain_f1_f2_f3` | `gen_domain_descriptions.py` |
+| `shared/keyword_behaviors.json` | Focused behaviors for individual keywords | `domain.keyword` | `gen_keyword_behaviors.py` |
+| `shared/facet_keywords.json` | TF-IDF keywords per facet/score | Nested structure | `analyze_facet_keywords.py` |
 | `archetypes.ts` | Predefined archetype definitions | N/A | Manual |
 
 ---
@@ -244,6 +265,14 @@ let textEntry = $derived.by(() => {
 **Data Source**: `src/lib/data/archetypes.ts`
 
 **Purpose**: Predefined personality profiles that set all 5 domain scores at once.
+
+**Archetype Sets**:
+- Norse Mythology (20 characters)
+- Star Wars (25 characters)
+- MCU (25 characters)
+- Greek Mythology
+- Roman Mythology
+- Green Ember
 
 **Key Functions**:
 - `getArchetypesByDistance(scores)`: Returns archetypes sorted by distance from current scores
@@ -274,16 +303,39 @@ Record<string, [number, number, number]>
 
 ## 8. SCRIPTS REFERENCE (persona-api)
 
+### Script Directory Structure
+
+```
+scripts/
+├── generators/
+│   ├── persona_prompts/
+│   │   └── gen_persona_prompts.py      # Bundle training JSONL → persona_prompts.json
+│   ├── domain/
+│   │   └── gen_domain_descriptions.py  # Create domain description JSON files
+│   └── keywords/
+│       └── gen_keyword_behaviors.py    # Generate focused behaviors for keywords
+├── analyzers/
+│   └── keywords/
+│       └── analyze_facet_keywords.py   # TF-IDF keyword extraction
+├── gen_behavioral_instructions.py      # Extract behavioral phrases from BFI-2 via Ollama
+├── reorganize_behavioral_instructions.py  # Organize into per-facet files
+├── gen_facet_data.py                   # Generate facet-level data
+├── gen_score_coherence.py              # Score coherence generation
+└── generate_training_data.py           # Generate training data JSONL files
+```
+
+### Script Reference
+
 | Script | Purpose |
 |--------|---------|
+| `generators/persona_prompts/gen_persona_prompts.py` | Bundle training JSONL → shared/persona_prompts.json |
+| `generators/domain/gen_domain_descriptions.py` | Create domain description JSON files |
+| `generators/keywords/gen_keyword_behaviors.py` | Generate focused behaviors for individual keywords |
+| `analyzers/keywords/analyze_facet_keywords.py` | TF-IDF keyword extraction |
 | `gen_behavioral_instructions.py` | Extract behavioral phrases from BFI-2 via Ollama |
 | `reorganize_behavioral_instructions.py` | Organize into per-facet files |
-| `gen_domain_text_structure.py` | Create domain text JSON files |
 | `gen_facet_data.py` | Generate facet-level data |
-| `analyze_facet_keywords.py` | TF-IDF keyword extraction |
-| `consolidate_training_data.py` | Bundle training JSONL → system_prompts.json |
 | `generate_training_data.py` | Generate training data JSONL files |
-| `gen_keyword_prompts.py` | Generate focused prompts for individual keywords |
 
 ---
 
@@ -291,9 +343,9 @@ Record<string, [number, number, number]>
 
 **Component**: `DomainSlider.svelte` (back face)
 
-**Data Source**: `src/lib/data/keyword_prompts.json`
+**Data Source**: `src/lib/data/shared/keyword_behaviors.json`
 
-**Purpose**: When user clicks a keyword tag on domain panel back, the description text changes to show a focused prompt for just that keyword.
+**Purpose**: When user clicks a keyword tag on domain panel back, the description text changes to show a focused behavior prompt for just that keyword.
 
 **Data Structure**:
 ```json
@@ -311,19 +363,19 @@ Record<string, [number, number, number]>
 ```
 
 **Behavior**:
-- Click keyword → description changes to focused prompt, keyword highlighted
+- Click keyword → description changes to focused behavior, keyword highlighted
 - Click same keyword again → returns to default description
-- Click different keyword → switches to that keyword's prompt
+- Click different keyword → switches to that keyword's behavior
 - Change facet scores → selection cleared automatically
 
 **Sound**: Uses `emojiPop` sound on keyword selection
 
 **Generation Pipeline**:
 1. Source data: `persona-api/persona_api/data/text/<domain>/**/*.json`
-2. Script: `persona-api/scripts/gen_keyword_prompts.py`
-3. Uses Ollama (qwen2.5:7b on sparx) to generate focused prompts
-4. Output: `persona-api/persona_api/data/keyword_prompts.json`
-5. Copied to: `persona-ui/src/lib/data/keyword_prompts.json`
+2. Script: `persona-api/scripts/generators/keywords/gen_keyword_behaviors.py`
+3. Uses Ollama (qwen2.5:7b on sparx) to generate focused behaviors
+4. Output: `persona-api/persona_api/data/keyword_behaviors.json`
+5. Copied to: `persona-ui/src/lib/data/shared/keyword_behaviors.json`
 
 **Stats**: 551 keywords across 5 domains (109 agreeableness, 103 conscientiousness, 123 extraversion, 120 negative_emotionality, 96 open_mindedness)
 
@@ -383,10 +435,33 @@ $soundEnabled         // Current state (boolean)
 
 ## 12. CRITICAL WARNINGS
 
-1. **Score String Order**: MUST be A,C,E,N,O. See comments in `personality.ts` lines 213-224.
+1. **Score String Order**: MUST be A,C,E,N,O. See comments in `personality.ts`.
 
 2. **Inverted Domain**: `negative_emotionality` is inverted. UI 5 = API 1.
 
 3. **JSON Key Mismatches**: If you see fallback text like "Balanced approach to most situations", the score string order is wrong or the JSON file is missing entries.
 
 4. **Archetype Initialization**: App starts with a random archetype. The `initialArchetypeId` is exported so ArchetypePanel can highlight it.
+
+---
+
+## 13. PER-ARCHETYPE DATA (Future)
+
+The `shared/` directory serves dual purposes:
+1. **Truly shared files**: Archetype-agnostic data like `domain_descriptions.json` and `keyword_behaviors.json`
+2. **Default fallback files**: When per-archetype versions don't exist, these are used
+
+Future per-archetype data structure:
+```
+src/lib/data/
+├── norse/
+│   └── persona_prompts.json    # Norse-flavored prompts
+├── starwars/
+│   └── persona_prompts.json    # Star Wars-flavored prompts
+├── mcu/
+│   └── (empty - falls back to shared)
+└── shared/
+    └── persona_prompts.json    # Default fallback
+```
+
+Loading logic: Check `data/{archetype-set}/` first, fall back to `data/shared/`.

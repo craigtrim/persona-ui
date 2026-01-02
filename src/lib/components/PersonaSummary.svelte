@@ -3,9 +3,9 @@
 	// Both scoreString and scoreStringDisplay now use the same order: A,C,E,N,O
 	// If lookups fail, you'll see fallback text like "Balanced approach to most situations"
 	import { emojiSummary, scoreString, scoreStringDisplay, DOMAINS, domainScores, setDomainScore } from '$lib/stores/personality';
-	import personalitySummariesV1 from '$lib/data/personality_summaries.json';
-	import personalitySummariesV2 from '$lib/data/personality_summaries_v2.json';
-	import systemPrompts from '$lib/data/system_prompts.json';
+	import summariesTagline from '$lib/data/shared/summaries_tagline.json';
+	import summariesHeadline from '$lib/data/shared/summaries_headline.json';
+	import personaPrompts from '$lib/data/shared/persona_prompts.json';
 	import { sfx } from '$lib/stores/sounds';
 
 	// Flip state for prompt panel
@@ -73,31 +73,31 @@
 		return text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]/gu, '').trim();
 	}
 
-	// Get v1 summaries (with emojis stripped)
-	let v1Summaries = $derived(
-		((personalitySummariesV1 as Record<string, string[]>)[$scoreString] || fallbackV1)
+	// Get tagline summaries (with emojis stripped)
+	let taglineSummaries = $derived(
+		((summariesTagline as Record<string, string[]>)[$scoreString] || fallbackV1)
 			.map(stripEmojis)
 	);
 
-	// Get v2 summary (stable - pick longest one)
-	let v2Summary = $derived.by(() => {
-		const summaries = (personalitySummariesV2 as Record<string, string[]>)[$scoreString] || [fallbackV2];
+	// Get headline summary (stable - pick longest one)
+	let headlineSummary = $derived.by(() => {
+		const summaries = (summariesHeadline as Record<string, string[]>)[$scoreString] || [fallbackV2];
 		return summaries.reduce((longest, current) =>
 			current.length > longest.length ? current : longest
 		);
 	});
 
-	// v1 rotates randomly, biased toward shorter texts (to complement longer v2)
-	let v1Summary = $derived.by(() => {
-		if (v1Summaries.length === 0) return fallbackV1[0];
-		if (v1Summaries.length === 1) return v1Summaries[0];
+	// Tagline rotates randomly, biased toward shorter texts (to complement longer headline)
+	let taglineSummary = $derived.by(() => {
+		if (taglineSummaries.length === 0) return fallbackV1[0];
+		if (taglineSummaries.length === 1) return taglineSummaries[0];
 
-		const v2Len = v2Summary.length;
+		const headlineLen = headlineSummary.length;
 
 		// Weight shorter texts more heavily (inverse length weighting)
-		// Texts shorter than v2 get higher weight
-		const weights = v1Summaries.map(text => {
-			const ratio = v2Len / Math.max(text.length, 1);
+		// Texts shorter than headline get higher weight
+		const weights = taglineSummaries.map(text => {
+			const ratio = headlineLen / Math.max(text.length, 1);
 			// Clamp between 0.5 and 3 to avoid extreme biases
 			return Math.max(0.5, Math.min(3, ratio));
 		});
@@ -107,14 +107,14 @@
 
 		for (let i = 0; i < weights.length; i++) {
 			random -= weights[i];
-			if (random <= 0) return v1Summaries[i];
+			if (random <= 0) return taglineSummaries[i];
 		}
-		return v1Summaries[v1Summaries.length - 1];
+		return taglineSummaries[taglineSummaries.length - 1];
 	});
 
-	// Get system prompt for current score combo
-	let systemPrompt = $derived(
-		(systemPrompts as Record<string, string>)[$scoreString] || fallbackPrompt
+	// Get persona prompt for current score combo
+	let personaPrompt = $derived(
+		(personaPrompts as Record<string, string>)[$scoreString] || fallbackPrompt
 	);
 </script>
 
@@ -174,23 +174,23 @@
 				onclick={toggleFlip}
 			>
 				<div class="max-w-xl mx-auto text-center p-4">
-					<p class="text-slate-100 text-lg mb-2">{v2Summary}</p>
-					<p class="text-slate-400 text-sm italic">{v1Summary}</p>
+					<p class="text-slate-100 text-lg mb-2">{headlineSummary}</p>
+					<p class="text-slate-400 text-sm italic">{taglineSummary}</p>
 				</div>
 			</button>
 
-			<!-- BACK: System Prompt -->
+			<!-- BACK: Persona Prompt -->
 			<button
 				class="flip-face flip-back bg-slate-950/95 border border-emerald-900/50 rounded-xl"
 				onclick={toggleFlip}
 			>
 				<div class="max-w-xl mx-auto p-4">
 					<div class="flex items-center justify-between mb-3">
-						<span class="text-emerald-400 text-xs font-mono uppercase tracking-wider">System Prompt</span>
+						<span class="text-emerald-400 text-xs font-mono uppercase tracking-wider">Persona Prompt</span>
 						<!-- Display order matches slider panels: A,C,E,N,O -->
 						<span class="text-slate-500 text-xs">{$scoreStringDisplay}</span>
 					</div>
-					<p class="text-emerald-100 text-sm font-mono leading-relaxed">{systemPrompt}</p>
+					<p class="text-emerald-100 text-sm font-mono leading-relaxed">{personaPrompt}</p>
 				</div>
 			</button>
 		</div>

@@ -215,9 +215,9 @@ export const emojiSummary = derived(domainScores, ($scores) => {
 // ⚠️  CRITICAL: DO NOT CHANGE THIS ORDER ⚠️
 // Order MUST be: A, C, E, N, O (Agreeableness, Conscientiousness, Extraversion, Negative_emotionality, Open_mindedness)
 // This matches the keys in:
-//   - personality_summaries.json
-//   - personality_summaries_v2.json
-//   - system_prompts.json
+//   - shared/summaries_tagline.json
+//   - shared/summaries_headline.json
+//   - shared/persona_prompts.json
 //
 // If you change this order, JSON lookups will fail and show fallback text like
 // "Balanced approach to most situations" instead of actual personality summaries.

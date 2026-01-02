@@ -1,8 +1,8 @@
 <script lang="ts">
 	import FacetBar from './FacetBar.svelte';
 	import type { DomainConfig } from '$lib/stores/personality';
-	import domainTexts from '$lib/data/domain_texts.json';
-	import keywordPrompts from '$lib/data/keyword_prompts.json';
+	import domainDescriptions from '$lib/data/shared/domain_descriptions.json';
+	import keywordBehaviors from '$lib/data/shared/keyword_behaviors.json';
 	import { sfx, preloadSounds } from '$lib/stores/sounds';
 
 	// Type for keyword prompts data
@@ -68,7 +68,7 @@
 	// Get a random text entry for current facet scores
 	let textEntry = $derived.by(() => {
 		const key = `${config.id}_${facetScores[0]}_${facetScores[1]}_${facetScores[2]}`;
-		const texts = (domainTexts as Record<string, Record<string, string[]>>)[key];
+		const texts = (domainDescriptions as Record<string, Record<string, string[]>>)[key];
 
 		if (!texts) return null;
 
@@ -86,12 +86,12 @@
 	// Track selected keyword for focused prompt display
 	let selectedKeyword = $state<string | null>(null);
 
-	// Get the focused prompt for the selected keyword
-	let focusedPrompt = $derived.by(() => {
+	// Get the focused behavior for the selected keyword
+	let focusedBehavior = $derived.by(() => {
 		if (!selectedKeyword) return null;
-		const domainPrompts = (keywordPrompts as KeywordPromptsData)[config.id];
-		if (!domainPrompts) return null;
-		return domainPrompts[selectedKeyword] || null;
+		const domainBehaviors = (keywordBehaviors as KeywordPromptsData)[config.id];
+		if (!domainBehaviors) return null;
+		return domainBehaviors[selectedKeyword] || null;
 	});
 
 	// Handle keyword click - toggle selection
@@ -189,11 +189,11 @@
 			{#if textEntry}
 				<!-- Fixed layout container for consistent positioning -->
 				<div class="back-content">
-					<!-- Description quote (shows focused prompt when keyword selected) -->
+					<!-- Description quote (shows focused behavior when keyword selected) -->
 					<blockquote class="description-area text-slate-300 text-sm italic leading-relaxed border-l-2 pl-3"
 						style="border-color: {selectedKeyword ? config.colorHigh : 'rgb(71 85 105)'};"
 					>
-						"{focusedPrompt || textEntry.description}"
+						"{focusedBehavior || textEntry.description}"
 					</blockquote>
 
 					<!-- Keywords as tags (clickable), limited to 8 -->
