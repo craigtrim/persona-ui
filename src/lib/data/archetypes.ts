@@ -7,6 +7,7 @@
  */
 
 import { GREEN_EMBER_ARCHETYPES } from './greenEmberArchetypes';
+import { GREEK_MYTHOLOGY_ARCHETYPES, GREEK_MYTHOLOGY_META_SVG } from './greekMythologyArchetypes';
 
 export interface ArchetypeDefinition {
 	id: string;
@@ -1058,6 +1059,13 @@ export const ARCHETYPE_SETS: ArchetypeSet[] = [
 		description: 'Characters from the Green Ember series',
 		svg: GREEN_EMBER_META_SVG,
 		archetypes: GREEN_EMBER_ARCHETYPES
+	},
+	{
+		id: 'greek-mythology',
+		name: 'Greek Mythology',
+		description: '64 characters from Greek mythology and Percy Jackson',
+		svg: GREEK_MYTHOLOGY_META_SVG,
+		archetypes: GREEK_MYTHOLOGY_ARCHETYPES
 	}
 ];
 
