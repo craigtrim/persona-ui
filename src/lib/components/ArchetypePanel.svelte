@@ -211,10 +211,6 @@
 					<span class="toggle-grid-icon">⊞</span>
 				{/if}
 			</div>
-			<span class="toggle-label">
-				{viewMode === 'characters' ? currentSet.name : 'Sets'}
-			</span>
-			<span class="toggle-chevron">▾</span>
 		</button>
 		{#if viewMode === 'characters'}
 			<div class="best-match-info">
@@ -325,28 +321,35 @@
 		width: 100%;
 		display: flex;
 		align-items: center;
-		gap: 6px;
-		padding: 6px;
-		background: rgba(51, 65, 85, 0.5);
+		justify-content: center;
+		padding: 8px;
+		background: rgba(51, 65, 85, 0.4);
 		border: 1px solid rgba(100, 116, 139, 0.3);
-		border-radius: 8px;
+		border-radius: 10px;
 		cursor: pointer;
 		transition: all 0.2s ease;
 		margin-bottom: 6px;
 	}
 
 	.view-toggle:hover {
-		background: rgba(71, 85, 105, 0.6);
+		background: rgba(71, 85, 105, 0.5);
 		border-color: rgba(100, 116, 139, 0.5);
+		box-shadow: 0 0 12px rgba(100, 116, 139, 0.3);
 	}
 
 	.toggle-icon {
-		width: 24px;
-		height: 24px;
-		flex-shrink: 0;
+		width: 48px;
+		height: 48px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		filter: drop-shadow(0 0 6px rgba(148, 163, 184, 0.4));
+		transition: all 0.2s ease;
+	}
+
+	.view-toggle:hover .toggle-icon {
+		filter: drop-shadow(0 0 10px rgba(148, 163, 184, 0.6));
+		transform: scale(1.05);
 	}
 
 	.toggle-icon :global(svg) {
@@ -355,24 +358,8 @@
 	}
 
 	.toggle-grid-icon {
-		font-size: 18px;
+		font-size: 36px;
 		color: #94a3b8;
-	}
-
-	.toggle-label {
-		flex: 1;
-		font-size: 9px;
-		color: #94a3b8;
-		text-align: left;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.toggle-chevron {
-		font-size: 10px;
-		color: #64748b;
-		flex-shrink: 0;
 	}
 
 	.best-match-info {
