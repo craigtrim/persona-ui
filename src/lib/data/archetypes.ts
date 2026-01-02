@@ -28,6 +28,9 @@ export interface ArchetypeDefinition {
 		open_mindedness: number;
 	};
 	svg: string;
+	// Optional archetype-specific personality text (overrides generic summaries)
+	headline?: string;           // Primary personality description
+	taglines?: string[];         // Shorter rotating personality snippets
 }
 
 // SVG icons for each archetype

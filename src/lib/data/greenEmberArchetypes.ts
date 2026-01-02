@@ -458,86 +458,158 @@ const REDEYE_SVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg
 export const GREEN_EMBER_ARCHETYPES: ArchetypeDefinition[] = [
 	{
 		id: 'heather',
-		name: 'Heather',
+		name: 'Heather Longtreader',
 		description: 'Compassionate healer-in-training, dedicated and curious',
 		traits: { agreeableness: 4, conscientiousness: 4, extraversion: 3, negative_emotionality: 3, open_mindedness: 4 },
-		svg: HEATHER_SVG
+		svg: HEATHER_SVG,
+		headline: 'Heather Longtreader embodies the heart of the Green Ember cause—fiercely compassionate, quietly determined, and open to possibilities others miss.',
+		taglines: [
+			'Gentle strength binds the resistance together',
+			'A healer\'s heart with a warrior\'s resolve',
+			'Sees hope where others see only ruins'
+		]
 	},
 	{
 		id: 'picket',
-		name: 'Picket',
+		name: 'Picket Longtreader',
 		description: 'Disciplined fighter who struggles with anger and resentment',
 		traits: { agreeableness: 2, conscientiousness: 4, extraversion: 2, negative_emotionality: 5, open_mindedness: 3 },
-		svg: PICKET_SVG
+		svg: PICKET_SVG,
+		headline: 'Picket Longtreader carries the weight of doubt and the spark of brilliance—an artist-warrior who questions everything yet fights for what matters.',
+		taglines: [
+			'A restless mind fuels both art and courage',
+			'Questions shape the sword as much as the brush',
+			'From uncertainty springs unexpected heroism'
+		]
 	},
 	{
 		id: 'smalls',
 		name: 'Smalls',
 		description: 'Servant-hearted, humble prince who carries heavy burden with steadiness',
 		traits: { agreeableness: 5, conscientiousness: 4, extraversion: 3, negative_emotionality: 2, open_mindedness: 4 },
-		svg: SMALLS_SVG
+		svg: SMALLS_SVG,
+		headline: 'Smalls, the heir to Jupiter\'s legacy, leads with warmth and unwavering purpose—a prince who earns loyalty through kindness rather than command.',
+		taglines: [
+			'Inspires through steadfast compassion',
+			'A true prince leads by serving others first',
+			'Calm under pressure, kind in all seasons'
+		]
 	},
 	{
 		id: 'helmer',
 		name: 'Helmer',
 		description: 'Gruff blademaster, extremely disciplined and emotionally reserved',
 		traits: { agreeableness: 2, conscientiousness: 5, extraversion: 2, negative_emotionality: 2, open_mindedness: 2 },
-		svg: HELMER_SVG
+		svg: HELMER_SVG,
+		headline: 'Helmer, the legendary war veteran of Harbone Citadel, forges soldiers through harsh discipline and uncompromising standards—respect earned, never given.',
+		taglines: [
+			'Training saves lives on the battlefield',
+			'Hard lessons from a harder master',
+			'Discipline is his love language'
+		]
 	},
 	{
 		id: 'rake',
 		name: 'Lord Rake',
 		description: 'Tough but fair strategic leader, inspires through action',
 		traits: { agreeableness: 3, conscientiousness: 5, extraversion: 4, negative_emotionality: 2, open_mindedness: 3 },
-		svg: RAKE_SVG
+		svg: RAKE_SVG,
+		headline: 'Lord Rake commands Cloud Mountain with strategic brilliance and measured warmth—a leader who balances duty with genuine care for his people.',
+		taglines: [
+			'Leads Cloud Mountain with steady hands',
+			'Strategy tempered by compassion',
+			'A fortress needs both walls and welcome'
+		]
 	},
 	{
 		id: 'emma',
 		name: 'Emma',
 		description: 'Nurturing, warm, reliable calming presence',
 		traits: { agreeableness: 5, conscientiousness: 4, extraversion: 3, negative_emotionality: 2, open_mindedness: 3 },
-		svg: EMMA_SVG
+		svg: EMMA_SVG,
+		headline: 'Emma brings quiet devotion and practical wisdom to those she loves—a steady presence who nurtures hope in dark times.',
+		taglines: [
+			'Care anchors the Longtreader family',
+			'Gentle hands, unshakable faith',
+			'Tends hearts as carefully as wounds'
+		]
 	},
 	{
 		id: 'kyle',
 		name: 'Kyle',
 		description: 'Friendly and eager, impulsive and reckless adventurer',
 		traits: { agreeableness: 4, conscientiousness: 2, extraversion: 4, negative_emotionality: 3, open_mindedness: 4 },
-		svg: KYLE_SVG
+		svg: KYLE_SVG,
+		headline: 'Kyle combines social warmth with creative curiosity—quick to connect, eager to explore, ready for whatever comes next.',
+		taglines: [
+			'Makes friends and finds adventures',
+			'Curiosity with a friendly face',
+			'Sees possibility in everyone'
+		]
 	},
 	{
 		id: 'jo',
 		name: 'Jo Shanks',
 		description: 'Independent lone operator, creative and unorthodox',
 		traits: { agreeableness: 3, conscientiousness: 3, extraversion: 2, negative_emotionality: 2, open_mindedness: 4 },
-		svg: JO_SVG
+		svg: JO_SVG,
+		headline: 'Jo Shanks brings irrepressible energy and creative flair to every situation—the friend who lightens burdens with laughter and loyalty.',
+		taglines: [
+			'Spirit lifts the whole company',
+			'Laughter is the weapon of choice',
+			'Adventure finds him before he finds it'
+		]
 	},
 	{
 		id: 'frye',
 		name: 'Captain Frye',
 		description: 'Loyal ship captain, follows protocol precisely',
 		traits: { agreeableness: 4, conscientiousness: 5, extraversion: 3, negative_emotionality: 2, open_mindedness: 2 },
-		svg: FRYE_SVG
+		svg: FRYE_SVG,
+		headline: 'Captain Frye approaches duties with methodical reliability—a craftsman of routine who finds meaning in faithful service.',
+		taglines: [
+			'Keeps the wheels turning',
+			'Steady work, steady heart',
+			'Not every hero seeks the spotlight'
+		]
 	},
 	{
 		id: 'wilfred',
-		name: 'Wilfred',
+		name: 'Wilfred Longtreader',
 		description: 'Loving father, meticulous long-term planner and visionary',
 		traits: { agreeableness: 4, conscientiousness: 5, extraversion: 2, negative_emotionality: 3, open_mindedness: 4 },
-		svg: WILFRED_SVG
+		svg: WILFRED_SVG,
+		headline: 'Wilfred Longtreader, keeper of secret causes, weaves hope through hidden networks—gentle wisdom paired with iron resolve.',
+		taglines: [
+			'Quiet work sustains the cause',
+			'Secrets kept, promises honored',
+			'Builds tomorrow in shadow'
+		]
 	},
 	{
 		id: 'morbin',
 		name: 'Morbin Blackhawk',
 		description: 'Cruel raptor lord, dominating presence commanding through fear',
 		traits: { agreeableness: 1, conscientiousness: 4, extraversion: 4, negative_emotionality: 2, open_mindedness: 3 },
-		svg: MORBIN_SVG
+		svg: MORBIN_SVG,
+		headline: 'Morbin Blackhawk, the fearsome raptor lord, executes his dark purpose with ruthless precision—ambition unchecked by conscience or doubt.',
+		taglines: [
+			'Shadow darkens all hope',
+			'Discipline serves a terrible purpose',
+			'Knows exactly what he is'
+		]
 	},
 	{
 		id: 'redeye',
 		name: 'Redeye Garlackson',
 		description: 'Treacherous, self-serving traitor with narrow self-interest',
 		traits: { agreeableness: 1, conscientiousness: 3, extraversion: 3, negative_emotionality: 4, open_mindedness: 2 },
-		svg: REDEYE_SVG
+		svg: REDEYE_SVG,
+		headline: 'Redeye Garlackson follows orders without question or mercy—a cold enforcer who finds satisfaction in control and compliance.',
+		taglines: [
+			'Enforces without hesitation',
+			'Orders given, orders obeyed',
+			'Cruelty worn like a uniform'
+		]
 	}
 ];
