@@ -10,6 +10,8 @@ import { GREEN_EMBER_ARCHETYPES } from './greenEmberArchetypes';
 import { GREEK_MYTHOLOGY_ARCHETYPES, GREEK_MYTHOLOGY_META_SVG } from './greekMythologyArchetypes';
 import { ROMAN_MYTHOLOGY_ARCHETYPES, ROMAN_MYTHOLOGY_META_SVG } from './romanMythologyArchetypes';
 import { NORSE_MYTHOLOGY_ARCHETYPES, NORSE_MYTHOLOGY_META_SVG } from './norseMythologyArchetypes';
+import { MCU_ARCHETYPES, MCU_META_SVG } from './mcuArchetypes';
+import { STAR_WARS_ARCHETYPES, STAR_WARS_META_SVG } from './starWarsArchetypes';
 
 export interface ArchetypeDefinition {
 	id: string;
@@ -1082,6 +1084,20 @@ export const ARCHETYPE_SETS: ArchetypeSet[] = [
 		description: '20 characters from Norse mythology and legends',
 		svg: NORSE_MYTHOLOGY_META_SVG,
 		archetypes: NORSE_MYTHOLOGY_ARCHETYPES
+	},
+	{
+		id: 'mcu',
+		name: 'Marvel Cinematic Universe',
+		description: '25 characters from the MCU',
+		svg: MCU_META_SVG,
+		archetypes: MCU_ARCHETYPES
+	},
+	{
+		id: 'star-wars',
+		name: 'Star Wars',
+		description: '25 characters from the Star Wars universe',
+		svg: STAR_WARS_META_SVG,
+		archetypes: STAR_WARS_ARCHETYPES
 	}
 ];
 
