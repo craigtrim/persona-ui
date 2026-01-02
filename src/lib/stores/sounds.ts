@@ -19,7 +19,7 @@ function getAudioContext(): AudioContext | null {
 // Sound definitions - frequency, duration, type configurations
 const SOUNDS = {
 	sliderTick: { freq: 800, duration: 0.03, type: 'square' as OscillatorType, volume: 0.08 },
-	facetTap: { freq: 600, duration: 0.025, type: 'square' as OscillatorType, volume: 0.06 },
+	facetTap: { freq: 1200, duration: 0.012, type: 'square' as OscillatorType, volume: 0.06 },
 	cardFlip: { freq: 300, duration: 0.08, type: 'sawtooth' as OscillatorType, volume: 0.1, freqEnd: 150 },
 	emojiPop: { freq: 500, duration: 0.06, type: 'sine' as OscillatorType, volume: 0.1, freqEnd: 700 },
 	archetypeSelect: { freq: 440, duration: 0.15, type: 'sine' as OscillatorType, volume: 0.12, freqEnd: 660 },

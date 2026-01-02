@@ -94,28 +94,6 @@
 		}
 	});
 
-	// Track previous match quality to detect when user hits 100%
-	let prevMatchQuality = $state(0);
-	let perfectMatchPlayed = $state(false);
-
-	$effect(() => {
-		const currentQuality = bestMatch.matchQuality;
-
-		// Play easter egg sound when hitting exactly 100% for the first time
-		// (not on initial load or archetype click, only on manual slider adjustment)
-		if (currentQuality === 100 && prevMatchQuality < 100 && !perfectMatchPlayed && Date.now() - lastClickTime > 100) {
-			sfx.perfectMatch();
-			perfectMatchPlayed = true;
-		}
-
-		// Reset the flag when quality drops below 100
-		if (currentQuality < 100) {
-			perfectMatchPlayed = false;
-		}
-
-		prevMatchQuality = currentQuality;
-	});
-
 	// Calculate opacity based on match quality (higher quality = more opaque)
 	function getOpacity(matchQuality: number): number {
 		// Map 0-100% quality to 0.3-1.0 opacity range
