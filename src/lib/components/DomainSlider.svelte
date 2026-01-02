@@ -202,7 +202,7 @@
 							<button
 								class="keyword-tag px-2 py-1 text-xs rounded-full transition-all duration-200"
 								class:selected={selectedKeyword === keyword}
-								style="border-left: 2px solid {config.colorHigh}; {selectedKeyword === keyword ? `box-shadow: 0 0 8px ${config.colorHigh}40;` : ''}"
+								style="border-left: 2px solid {config.colorHigh}; {selectedKeyword === keyword ? `box-shadow: 0 0 12px ${config.colorHigh}cc, 0 0 24px ${config.colorHigh}80; text-shadow: 0 0 8px ${config.colorHigh}99;` : ''}"
 								onclick={() => handleKeywordClick(keyword)}
 							>
 								{keyword}
