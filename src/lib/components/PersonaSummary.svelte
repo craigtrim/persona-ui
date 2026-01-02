@@ -2,7 +2,7 @@
 	// ⚠️ CRITICAL: scoreString order is A,C,E,N,O (N before O) - must match JSON file keys
 	// Both scoreString and scoreStringDisplay now use the same order: A,C,E,N,O
 	// If lookups fail, you'll see fallback text like "Balanced approach to most situations"
-	import { emojiSummary, scoreString, scoreStringDisplay } from '$lib/stores/personality';
+	import { emojiSummary, scoreString, scoreStringDisplay, DOMAINS, domainScores, setDomainScore } from '$lib/stores/personality';
 	import personalitySummariesV1 from '$lib/data/personality_summaries.json';
 	import personalitySummariesV2 from '$lib/data/personality_summaries_v2.json';
 	import systemPrompts from '$lib/data/system_prompts.json';
@@ -12,6 +12,46 @@
 
 	function toggleFlip() {
 		isFlipped = !isFlipped;
+	}
+
+	// Emoji gradient picker state
+	let expandedDomainIndex = $state<number | null>(null);
+	let bounceIndex = $state<number | null>(null);
+
+	function handleEmojiTap(index: number) {
+		if (expandedDomainIndex === index) {
+			// Already expanded, close it
+			expandedDomainIndex = null;
+			return;
+		}
+
+		// Trigger bounce animation
+		bounceIndex = index;
+		setTimeout(() => {
+			bounceIndex = null;
+		}, 200);
+
+		// Expand the gradient picker
+		expandedDomainIndex = index;
+	}
+
+	function handleGradientSelect(domainId: string, score: number) {
+		setDomainScore(domainId, score);
+		// Close picker after selection
+		setTimeout(() => {
+			expandedDomainIndex = null;
+		}, 150);
+	}
+
+	function handleBackdropClick() {
+		expandedDomainIndex = null;
+	}
+
+	// Get current emoji for each domain
+	function getDomainEmoji(domainIndex: number): string {
+		const domain = DOMAINS[domainIndex];
+		const score = Math.round($domainScores[domain.id]);
+		return domain.emojiGradient[score] || domain.emojiGradient[3];
 	}
 
 	// Fallback summaries
@@ -76,7 +116,48 @@
 
 <!-- Emoji Header - Sticky at top -->
 <div class="emoji-header sticky top-0 z-20 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 px-4 py-3 -mx-4">
-	<div class="text-5xl tracking-widest text-center">{$emojiSummary}</div>
+	<!-- Backdrop for dismissing picker -->
+	{#if expandedDomainIndex !== null}
+		<button
+			class="fixed inset-0 z-10 bg-transparent"
+			onclick={handleBackdropClick}
+			aria-label="Close emoji picker"
+		></button>
+	{/if}
+
+	<div class="emoji-row">
+		{#each DOMAINS as domain, i}
+			<div class="emoji-container">
+				<!-- Main emoji button -->
+				<button
+					class="emoji-btn"
+					class:bounce={bounceIndex === i}
+					class:active={expandedDomainIndex === i}
+					onclick={() => handleEmojiTap(i)}
+					aria-label={`Adjust ${domain.name}`}
+				>
+					{getDomainEmoji(i)}
+				</button>
+
+				<!-- Gradient picker popup -->
+				{#if expandedDomainIndex === i}
+					<div class="gradient-picker">
+						{#each [1, 2, 3, 4, 5] as score}
+							{@const isCurrentScore = Math.round($domainScores[domain.id]) === score}
+							<button
+								class="gradient-emoji"
+								class:current={isCurrentScore}
+								onclick={() => handleGradientSelect(domain.id, score)}
+								aria-label={`Set ${domain.name} to ${score}`}
+							>
+								{domain.emojiGradient[score]}
+							</button>
+						{/each}
+					</div>
+				{/if}
+			</div>
+		{/each}
+	</div>
 </div>
 
 <!-- Prompt Panel - Scrolls with content -->
@@ -113,6 +194,103 @@
 </div>
 
 <style>
+	/* Emoji Header Styles */
+	.emoji-row {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+		position: relative;
+		z-index: 20;
+	}
+
+	.emoji-container {
+		position: relative;
+	}
+
+	.emoji-btn {
+		font-size: 2.75rem;
+		line-height: 1;
+		padding: 0.25rem;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		transition: transform 0.15s ease;
+		border-radius: 0.5rem;
+	}
+
+	.emoji-btn:hover {
+		transform: scale(1.1);
+	}
+
+	.emoji-btn:active {
+		transform: scale(0.95);
+	}
+
+	.emoji-btn.active {
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	.emoji-btn.bounce {
+		animation: bounce 0.2s ease;
+	}
+
+	@keyframes bounce {
+		0%, 100% { transform: scale(1); }
+		50% { transform: scale(1.3); }
+	}
+
+	.gradient-picker {
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 0.25rem;
+		padding: 0.5rem;
+		background: rgba(15, 23, 42, 0.95);
+		border: 1px solid rgba(100, 116, 139, 0.3);
+		border-radius: 1rem;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+		z-index: 30;
+		animation: fadeSlideIn 0.2s ease;
+	}
+
+	@keyframes fadeSlideIn {
+		from {
+			opacity: 0;
+			transform: translateX(-50%) translateY(-10px) scale(0.9);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(-50%) translateY(0) scale(1);
+		}
+	}
+
+	.gradient-emoji {
+		font-size: 1.75rem;
+		line-height: 1;
+		padding: 0.375rem;
+		background: transparent;
+		border: 2px solid transparent;
+		border-radius: 0.5rem;
+		cursor: pointer;
+		transition: all 0.15s ease;
+		opacity: 0.6;
+	}
+
+	.gradient-emoji:hover {
+		opacity: 1;
+		transform: scale(1.15);
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	.gradient-emoji.current {
+		opacity: 1;
+		border-color: rgba(52, 211, 153, 0.6);
+		background: rgba(52, 211, 153, 0.15);
+		transform: scale(1.1);
+	}
+
 	.prompt-panel {
 		perspective: 1000px;
 	}
