@@ -3,7 +3,8 @@
 	import PersonaSummary from '$lib/components/PersonaSummary.svelte';
 	import ArchetypePanel from '$lib/components/ArchetypePanel.svelte';
 	import MobileArchetypeDrawer from '$lib/components/MobileArchetypeDrawer.svelte';
-	import { DOMAINS, domainScores, facetScores, setDomainScore, setFacetScore } from '$lib/stores/personality';
+	import { DOMAINS, domainScores, facetScores, setDomainScore, setFacetScore, selectedArchetype } from '$lib/stores/personality';
+	import { archetypeSetId } from '$lib/stores/archetypeSet';
 </script>
 
 <!-- Desktop: fixed side panel -->
@@ -24,6 +25,8 @@
 					facetScores={$facetScores[domain.id]}
 					onDomainChange={(value) => setDomainScore(domain.id, value)}
 					onFacetChange={(facetIndex, value) => setFacetScore(domain.id, facetIndex, value)}
+					archetypeName={$selectedArchetype?.name ?? null}
+					archetypeSetId={$archetypeSetId}
 				/>
 			{/each}
 		</div>

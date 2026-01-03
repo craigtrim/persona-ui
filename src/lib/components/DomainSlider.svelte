@@ -5,8 +5,16 @@
 	import keywordBehaviors from '$lib/data/shared/keyword_behaviors.json';
 	import { sfx, preloadSounds } from '$lib/stores/sounds';
 
+	// Character-specific keyword examples by archetype set
+	import starwarsKeywordExamples from '$lib/data/starwars/keyword_examples.json';
+
 	// Type for keyword prompts data
 	type KeywordPromptsData = Record<string, Record<string, string>>;
+
+	// Map archetype set IDs to their keyword examples
+	const keywordExamplesBySet: Record<string, Record<string, Record<string, string>>> = {
+		starwars: starwarsKeywordExamples
+	};
 
 	interface Props {
 		config: DomainConfig;
@@ -14,9 +22,11 @@
 		facetScores: [number, number, number];
 		onDomainChange: (value: number) => void;
 		onFacetChange: (facetIndex: number, value: number) => void;
+		archetypeName: string | null;
+		archetypeSetId: string;
 	}
 
-	let { config, score, facetScores, onDomainChange, onFacetChange }: Props = $props();
+	let { config, score, facetScores, onDomainChange, onFacetChange, archetypeName, archetypeSetId }: Props = $props();
 
 	// Flip state
 	let isFlipped = $state(false);
@@ -87,8 +97,22 @@
 	let selectedKeyword = $state<string | null>(null);
 
 	// Get the focused behavior for the selected keyword
+	// Prioritizes character-specific examples over generic behaviors
 	let focusedBehavior = $derived.by(() => {
 		if (!selectedKeyword) return null;
+
+		// Try character-specific example first
+		if (archetypeName) {
+			const setExamples = keywordExamplesBySet[archetypeSetId];
+			if (setExamples) {
+				const characterExamples = setExamples[archetypeName];
+				if (characterExamples && characterExamples[selectedKeyword]) {
+					return characterExamples[selectedKeyword];
+				}
+			}
+		}
+
+		// Fall back to generic keyword behavior
 		const domainBehaviors = (keywordBehaviors as KeywordPromptsData)[config.id];
 		if (!domainBehaviors) return null;
 		return domainBehaviors[selectedKeyword] || null;
