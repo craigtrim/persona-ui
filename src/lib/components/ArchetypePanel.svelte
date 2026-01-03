@@ -378,6 +378,10 @@
 		color: #94a3b8;
 		font-weight: 600;
 		line-height: 1.2;
+		height: 2.4em; /* Fixed height for 2 lines - prevents bouncing */
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.match-quality {
@@ -485,6 +489,7 @@
 		text-align: center;
 		line-height: 1.2;
 		max-width: 80px;
+		height: 1.2em; /* Fixed height for single line - prevents bouncing */
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;

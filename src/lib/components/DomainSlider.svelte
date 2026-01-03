@@ -13,7 +13,7 @@
 
 	// Map archetype set IDs to their keyword examples
 	const keywordExamplesBySet: Record<string, Record<string, Record<string, string>>> = {
-		starwars: starwarsKeywordExamples
+		'star-wars': starwarsKeywordExamples
 	};
 
 	interface Props {
