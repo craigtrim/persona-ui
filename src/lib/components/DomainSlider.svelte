@@ -76,8 +76,12 @@
 	let thumbPercent = $derived(((score - 1) / 4) * 100);
 
 	// Get a random text entry for current facet scores
+	// For inverted domains (negative_emotionality), convert UI scores back to API scores for lookup
 	let textEntry = $derived.by(() => {
-		const key = `${config.id}_${facetScores[0]}_${facetScores[1]}_${facetScores[2]}`;
+		const lookupScores = config.inverted
+			? [6 - facetScores[0], 6 - facetScores[1], 6 - facetScores[2]]
+			: facetScores;
+		const key = `${config.id}_${lookupScores[0]}_${lookupScores[1]}_${lookupScores[2]}`;
 		const texts = (domainDescriptions as Record<string, Record<string, string[]>>)[key];
 
 		if (!texts) return null;
@@ -91,6 +95,7 @@
 	});
 
 	// Check if current scores are neutral (3/3/3)
+	// For inverted domains, neutral is still 3/3/3 in UI space
 	let isNeutral = $derived(facetScores[0] === 3 && facetScores[1] === 3 && facetScores[2] === 3);
 
 	// Track selected keyword for focused prompt display
